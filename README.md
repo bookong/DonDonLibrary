@@ -14,6 +14,7 @@ As of 04.05.2021 it's been some time since I compiled it for the last time. Some
 * Research other generation's FUMEN format <br>
 * Implement TJA support on ScriptEditor <br>
 * Organize & optimize the code <br>
+* Create a wiki page for tools documentation
 
 ## Special thanks
 [TGEnigma](https://github.com/TGEnigma) for [Amicitia](https://github.com/TGEnigma/Amicitia). <br>
