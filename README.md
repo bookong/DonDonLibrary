@@ -7,7 +7,7 @@ Modding library for the Taiko games
 
 ## Advices
 The code is currently in its initial phase and it's very unoptimized.<br>
-As of 04.05.2021 it's been some time since I compiled it for the last time. Soem code may be broken or unfinished. 
+As of 04.05.2021 it's been some time since I compiled it for the last time. Some code may be broken or unfinished. 
 
 ## Special thanks
 [TGEnigma](https://github.com/TGEnigma) for [Amicitia](https://github.com/TGEnigma/Amicitia). <br>
