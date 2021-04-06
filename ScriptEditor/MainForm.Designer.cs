@@ -29,6 +29,7 @@ namespace ScriptEditor
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -36,6 +37,7 @@ namespace ScriptEditor
             this.gen3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openTaikoScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDscMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openTjaMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveTaikoScriptToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.fumenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,9 +74,10 @@ namespace ScriptEditor
             this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fumenToolStripMenuItem,
             this.openTaikoScriptToolStripMenuItem,
-            this.openDscMenuItem});
+            this.openDscMenuItem,
+            this.openTjaMenuItem});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // fumenToolStripMenuItem
@@ -82,7 +85,7 @@ namespace ScriptEditor
             this.fumenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gen3ToolStripMenuItem});
             this.fumenToolStripMenuItem.Name = "fumenToolStripMenuItem";
-            this.fumenToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.fumenToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.fumenToolStripMenuItem.Text = "Fumen";
             // 
             // gen3ToolStripMenuItem
@@ -95,16 +98,23 @@ namespace ScriptEditor
             // openTaikoScriptToolStripMenuItem
             // 
             this.openTaikoScriptToolStripMenuItem.Name = "openTaikoScriptToolStripMenuItem";
-            this.openTaikoScriptToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.openTaikoScriptToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.openTaikoScriptToolStripMenuItem.Text = "TaikoScript";
             this.openTaikoScriptToolStripMenuItem.Click += new System.EventHandler(this.openTaikoScriptToolStripMenuItem_Click);
             // 
             // openDscMenuItem
             // 
             this.openDscMenuItem.Name = "openDscMenuItem";
-            this.openDscMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.openDscMenuItem.Size = new System.Drawing.Size(183, 22);
             this.openDscMenuItem.Text = "DSC";
             this.openDscMenuItem.Click += new System.EventHandler(this.openDscMenuItem_Click);
+            // 
+            // openTjaMenuItem
+            // 
+            this.openTjaMenuItem.Name = "openTjaMenuItem";
+            this.openTjaMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.openTjaMenuItem.Text = "TJA [Experimental]";
+            this.openTjaMenuItem.Click += new System.EventHandler(this.openTjaMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
@@ -112,7 +122,7 @@ namespace ScriptEditor
             this.saveTaikoScriptToolStripMenuItem1,
             this.fumenToolStripMenuItem1});
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // saveTaikoScriptToolStripMenuItem1
@@ -172,6 +182,7 @@ namespace ScriptEditor
             this.ClientSize = new System.Drawing.Size(669, 467);
             this.Controls.Add(this.scriptBox);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Taiko ScriptEditor";
@@ -198,6 +209,7 @@ namespace ScriptEditor
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem genMeasureDivMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openDscMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openTjaMenuItem;
     }
 }
 

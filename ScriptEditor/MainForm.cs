@@ -129,5 +129,19 @@ namespace ScriptEditor
         {
             scriptBox.Lines = UTS.FromFumen(Fumen.GenMeasureDivision(UTS.ToFumen(scriptBox.Lines)));
         }
+
+        private void openTjaMenuItem_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.InitialDirectory = @".\";
+                dialog.Filter = "TJA file (*.tja)|*.tja";
+                dialog.FilterIndex = 1;
+                if (dialog.ShowDialog() == DialogResult.OK && File.Exists(dialog.FileName))
+                {
+                    scriptBox.Lines = UTS.FromFumen(Fumen.FromTja(dialog.FileName));
+                }
+            }
+        }
     }
 }
