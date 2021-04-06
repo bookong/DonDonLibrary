@@ -98,25 +98,6 @@ namespace DonDonLibrary.Chart.Misc.DIVA
                         }
                         track.normalTrack.notes.Add(note);
                     }
-                    // DEBUG: set subtracks to prevent crashes
-                    // I'm aware this is memory-eating and slows down the program
-                    // but remember... DEBUG.
-                    if (isNewTrack)
-                    {
-                        track.normalTrack = new SubTrack();
-                        track.professionalTrack = new SubTrack();
-                        track.masterTrack = new SubTrack();
-
-                        track.normalTrack.scrollSpeed = 1.0f;
-                        track.professionalTrack.scrollSpeed = 1.0f;
-                        track.masterTrack.scrollSpeed = 1.0f;
-
-                        track.normalTrack.notes = new List<Note>();
-                        track.professionalTrack.notes = new List<Note>();
-                        track.masterTrack.notes = new List<Note>();
-
-                        isNewTrack = false;
-                    }
                 }
                 else
                 {

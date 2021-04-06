@@ -171,7 +171,8 @@ namespace DonDonLibrary.Chart
 
             // process all notes into other lists
             Gen3 divFumen = new Gen3();
-            Track curTrack = NewTrack(fumenData.tracks[0].bpm);
+            Track curTrack = new Track();
+            curTrack.bpm = fumenData.tracks[0].bpm;
             
             List<Note> normalNotes = new List<Note>();
             List<Note> profNotes = new List<Note>();
@@ -189,7 +190,8 @@ namespace DonDonLibrary.Chart
                 if(note.time > curMeasure)
                 {
                     divFumen.tracks.Add(curTrack);
-                    curTrack = NewTrack(fumenData.tracks[0].bpm);
+                    curTrack = new Track();
+                    curTrack.bpm = fumenData.tracks[0].bpm;
                     curMeasure += measureLength;
                     curTrack.time = curMeasure;
                 }
@@ -199,6 +201,105 @@ namespace DonDonLibrary.Chart
             }
 
             return divFumen;
+        }
+
+        public static Gen3 FromTja(string path)
+        {
+            char[] stNote = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+            Gen3 fumenData = new Gen3();
+            Track curTrack = new Track();
+
+            float bpm = 0.0f;
+            string[] lines = File.ReadAllLines(path);
+            string[] split;
+            string[] split1;
+            bool metaSection = true;
+            int measure = 4;
+            float milliPerMeasure = 0.0f;
+            float time = 0.0f;
+            float measureDivision = 0.0f;
+            float delta = 0.0f;
+
+            int basePoint = 0;
+            int addPoint = 0;
+
+            foreach (string line in lines)
+            {
+                if (metaSection) { split = line.Split(':'); }
+                else { split = line.Split(','); }
+
+                //foreach(string item in split) { Console.Write(item + " "); }
+
+                if (metaSection)
+                {
+                    if (line.StartsWith("BPM"))
+                        bpm = float.Parse(split[1]);
+                    else if (line.StartsWith("SCOREINIT"))
+                        basePoint = int.Parse(split[1]);
+                    else if (line.StartsWith("SCOREDIFF"))
+                        addPoint = int.Parse(split[1]);
+                    else if (line.StartsWith("#START"))
+                        metaSection = false;
+
+                    curTrack.bpm = bpm;
+                    curTrack.trackLine = 1;
+                }
+                else
+                {
+                    if (line.Length == 0) continue;
+
+                    if (line.StartsWith("#END"))
+                    {
+                        fumenData.tracks.Add(curTrack);
+                        break;
+                    }
+                    else if (line.StartsWith("#BPMCHANGE"))
+                    {
+                        fumenData.tracks.Add(curTrack);
+                        bpm = float.Parse(line.Split(' ')[1]);
+                        curTrack = new Track();
+                        curTrack.bpm = bpm;
+                        curTrack.trackLine = 1;
+                        curTrack.time = time;
+                        delta = 0.0f;
+                    }
+                    else if (line.StartsWith("#MEASURE"))
+                        measure = int.Parse(line.Split(' ')[1].Split('/')[0]);
+                    else if (stNote.Contains(line[0]))
+                    {
+                        milliPerMeasure = 60000 * measure * 4 / bpm;
+                        split = line.Split(',');
+                        foreach(string notes in split)
+                        {
+                            if (notes.Length == 0) continue;
+                            if (!notes.StartsWith("//"))
+                            {
+                                measureDivision = milliPerMeasure / notes.Length;
+                                for (int i = 0; i < notes.Length; i++)
+                                {
+                                    if (notes[i] == '0') continue;
+                                    else
+                                    {
+                                        Note note = new Note();
+                                        note.addPoint = (short)addPoint;
+                                        note.basePoint = (short)basePoint;
+                                        note.time = (measureDivision * i) + delta;
+                                        note.type = 1;
+                                        curTrack.normalTrack.notes.Add(note);
+                                    }
+                                }
+                            }
+                            delta += milliPerMeasure;
+                        }
+
+                        time += milliPerMeasure;
+                    }
+                    else
+                        continue;
+                }
+            }
+
+            return fumenData;
         }
     }
 }
