@@ -40,6 +40,8 @@ namespace DonDonLibrary.Chart
             // reading the header data
             fumenData.header.hanteiData = reader.ReadSingles(108);
             fumenData.header.unknownHeaderData = reader.ReadInt32s(20);
+            if (fumenData.header.unknownHeaderData[1] == 270991360)
+                reader.Endianness = Endianness.BigEndian;
             //reader.SeekBegin(0);
             //reader.ReadBytes(512).ToString();
             int trackCount = reader.ReadInt32();
