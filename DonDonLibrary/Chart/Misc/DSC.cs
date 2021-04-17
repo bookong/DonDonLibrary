@@ -10,9 +10,9 @@ namespace DonDonLibrary.Chart.Misc.DIVA
 {
     public class DSC
     {
-        public static Gen3 ToFumen(EndianBinaryReader reader)
+        public static Gen3Fumen ToFumen(EndianBinaryReader reader)
         {
-            int[] formats = { 302121504, 335874337, 353510679 };
+            int[] formats = { 302121504 };
             int signature = reader.ReadInt32();
             int command;
             int paramCount;
@@ -20,7 +20,7 @@ namespace DonDonLibrary.Chart.Misc.DIVA
             bool firstTempoSet = true;
             bool isNewTrack = true;
 
-            Gen3 fumenData = new Gen3();
+            Gen3Fumen fumenData = new Gen3Fumen();
             Track track = new Track();
             float time = 0;
             float bpm = 0;
@@ -98,10 +98,6 @@ namespace DonDonLibrary.Chart.Misc.DIVA
                         }
                         track.normalTrack.notes.Add(note);
                     }
-                }
-                else
-                {
-                    paramCount = Diva.FT.Script.GetParameterCount((Diva.FT.Opcode)command);
                 }
             }
             fumenData.tracks.Add(track);

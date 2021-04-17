@@ -1,12 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DonDonLibrary.IO;
 using DonDonLibrary.Chart;
@@ -21,8 +14,22 @@ namespace ScriptEditor
             InitializeComponent();
         }
 
+        private static Endianness GetEndianness()
+        {
+            using (EndiannessForm endDialog = new EndiannessForm())
+            {
+                if (endDialog.ShowDialog() == DialogResult.OK)
+                {
+                    if (endDialog.endiannessBox.SelectedIndex == 1)
+                        return Endianness.BigEndian;
+                }
+            }
+            return Endianness.LittleEndian;
+        }
+
         private void gen3ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Endianness endianness;
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
                 dialog.InitialDirectory = @".\";
@@ -31,11 +38,12 @@ namespace ScriptEditor
                 dialog.FilterIndex = 1;
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    using (var reader = new EndianBinaryReader(File.Open(dialog.FileName, FileMode.Open), Endianness.LittleEndian))
+                    endianness = GetEndianness();
+                    using (EndianBinaryReader reader = new EndianBinaryReader(File.Open(dialog.FileName, FileMode.Open), endianness))
                     {
-                        Gen3 fumenData = Fumen.Read(reader);
+                        Gen3Fumen fumenData = Gen3.Read(reader);
                         scriptBox.Lines = UTS.FromFumen(fumenData);
-                        using(var writer = new EndianBinaryWriter(File.Open("OPENFILECACHE", FileMode.Create), Endianness.LittleEndian))
+                        using(EndianBinaryWriter writer = new EndianBinaryWriter(File.Open("OPENFILECACHE", FileMode.Create), Endianness.LittleEndian))
                         {
                             writer.Write(fumenData.header.hanteiData);
                             writer.Write(fumenData.header.unknownHeaderData);
@@ -64,7 +72,6 @@ namespace ScriptEditor
                     }
                 }
             }
-            //using(EndianBinaryWriter writer = new EndianBinaryWriter())
         }
 
         private void openTaikoScriptToolStripMenuItem_Click(object sender, EventArgs e)
@@ -83,6 +90,7 @@ namespace ScriptEditor
 
         private void saveGen3MenuItem_Click(object sender, EventArgs e)
         {
+            Endianness endianness;
             using(SaveFileDialog dialog = new SaveFileDialog())
             {
                 dialog.InitialDirectory = @".\";
@@ -98,12 +106,14 @@ namespace ScriptEditor
                             if (!dialog.FileName.ToLower().EndsWith(".bin"))
                                 dialog.FileName += ".bin";
 
-                        using (var writer = new EndianBinaryWriter(File.Open(dialog.FileName, FileMode.Create), Endianness.LittleEndian))
+                        endianness = GetEndianness();
+
+                        using (EndianBinaryWriter writer = new EndianBinaryWriter(File.Open(dialog.FileName, FileMode.Create), endianness))
                         {
                             if (!File.Exists("OPENFILECACHE"))
                                 MessageBox.Show("Header cache (created when loading a fumen) does not exist. This will write a set of 0x00 on the header instead, possibly causing errors.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                            Fumen.Write(writer, UTS.ToFumen(scriptBox.Lines));
+                            Gen3.Write(writer, UTS.ToFumen(scriptBox.Lines));
                         }
                     }
                 }
@@ -125,23 +135,26 @@ namespace ScriptEditor
             }
         }
 
-        private void genMeasureDivMenuItem_Click(object sender, EventArgs e)
-        {
-            scriptBox.Lines = UTS.FromFumen(Fumen.GenMeasureDivision(UTS.ToFumen(scriptBox.Lines)));
-        }
-
-        private void openTjaMenuItem_Click(object sender, EventArgs e)
+        private void openGen2MenuItem_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
+                Endianness endianness = Endianness.LittleEndian;
                 dialog.InitialDirectory = @".\";
-                dialog.Filter = "TJA file (*.tja)|*.tja";
+                dialog.Filter = "All Files (*.*)|*.*";
                 dialog.FilterIndex = 1;
-                if (dialog.ShowDialog() == DialogResult.OK && File.Exists(dialog.FileName))
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    scriptBox.Lines = UTS.FromFumen(Fumen.FromTja(dialog.FileName));
+                    endianness = GetEndianness();
+                    using (EndianBinaryReader reader = new EndianBinaryReader(File.Open(dialog.FileName, FileMode.Open), endianness))
+                        scriptBox.Lines = UTS.FromFumen(DonDonLibrary.Chart.Gen2.Gen2.Read(reader));
                 }
             }
+        }
+
+        private void gen2Gen3MenuItem_Click(object sender, EventArgs e)
+        {
+            scriptBox.Lines = UTS.ConvertGen2ToGen3(scriptBox.Lines);
         }
     }
 }

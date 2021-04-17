@@ -25,7 +25,7 @@ namespace DonDonLibrary.Chart
             return cmd_spl[1].Split(',');
         }
 
-        public static string[] FromFumen(Gen3 fumenData)
+        public static string[] FromFumen(Gen3Fumen fumenData)
         {
             List<String> uts = new List<string>();
             bool firstTrack = true;
@@ -95,9 +95,60 @@ namespace DonDonLibrary.Chart
             return uts.ToArray();
         }
 
-        public static Gen3 ToFumen(string[] uts)
+        public static string[] FromFumen(Gen2.Gen2Fumen fumenData)
         {
-            Gen3 fumenData = new Gen3();
+            List<String> uts = new List<string>();
+            bool firstTrack = true;
+            // -1000 to assure that the time will always be greater than
+            int point = -1;
+            float measure = 0.0f;
+            SubTrack curSubTrack = new SubTrack();
+            string[] subTrackLabels = { "NORMAL", "PROFESSIONAL", "MASTER" };
+
+            foreach (Gen2.Track track in fumenData.tracks)
+            {
+                measure = 60 / track.bpm * 4 / 64;
+
+                if (!firstTrack)
+                    uts.Add("TRACK_END();");
+
+                uts.Add($"TRACK2_START({StringFormat.Stringify(track.bpm)}, {StringFormat.Stringify(track.time)}, {track.gogoFlag});");
+
+                for (int i = 0; i < 6; i++)
+                {
+                    uts.Add($"SUBTRACK2_START({i}, {StringFormat.Stringify(track.scrollSpeeds[i])});");
+                    int noteSt = track.subtracks[i].noteIndexSt;
+                    int noteCount = track.subtracks[i].noteCount;
+                    int pointAdd = track.subtracks[i].pointGain;
+                    if (pointAdd != point)
+                    {
+                        uts.Add($"SET_POINT_BASE({pointAdd});");
+                        uts.Add($"SET_POINT_INCREASE(0);");
+                    }
+
+                    for (int k = noteSt; k < (noteSt + noteCount); k++)
+                    {
+                        int rollHoldTime = fumenData.notes[k].longNoteLength;
+                        int balloonHitCount = fumenData.notes[k].balloonHitCount;
+                        int type = fumenData.notes[k].type;
+
+                        uts.Add($"TIME({StringFormat.Stringify(measure * fumenData.notes[k].measure * 1000)});");
+                        uts.Add($"NOTE2({type}, {rollHoldTime}, {balloonHitCount});");
+                    }
+                    uts.Add("SUBTRACK_END();");
+                }
+
+                if (firstTrack)
+                    firstTrack = false;
+            }
+            uts.Add("TRACK_END();");
+
+            return uts.ToArray();
+        }
+
+        public static Gen3Fumen ToFumen(string[] uts)
+        {
+            Gen3Fumen fumenData = new Gen3Fumen();
             
             Track curTrack = new Track();
             SubTrack curSubTrack = new SubTrack();
@@ -188,6 +239,58 @@ namespace DonDonLibrary.Chart
             }
             Console.WriteLine(fumenData.tracks[0].normalTrack.notes.Count);
             return fumenData;
+        }
+
+        public static string[] ConvertGen2ToGen3(string[] _lines)
+        {
+            List<string> lines = new List<string>();
+            string curSubtrack = "";
+            string[] args;
+            string noteType = "";
+
+            foreach(string line in _lines)
+            {
+                args = GetCommandArgs(line);
+                for(int i = 0; i < args.Length; i++) { args[i] = args[i].Replace(" ", "");  }
+
+                if (line.StartsWith("TRACK2_START"))
+                    lines.Add($"TRACK_START({args[1]}, {args[0]}, {args[2]}, 1);");
+                else if (line.StartsWith("TRACK_END"))
+                    lines.Add(line);
+                else if (line.StartsWith("SUBTRACK2_START"))
+                {
+                    if (args[0] == "0")
+                        lines.Add($"SUBTRACK_START(NORMAL, {args[1]});");
+                    else if (args[0] == "1")
+                        lines.Add($"SUBTRACK_START(PROFESSIONAL, {args[1]});");
+                    else if (args[0] == "2")
+                        lines.Add($"SUBTRACK_START(MASTER, {args[1]});");
+                    else
+                    {
+                        curSubtrack = "IGNORE";
+                        continue;
+                    }
+
+                    curSubtrack = "NO_IGNORE";
+                }
+                else if (line.StartsWith("SUBTRACK_END") && curSubtrack == "NO_IGNORE")
+                    lines.Add(line);
+                else if (line.StartsWith("SET_POINT") && curSubtrack == "NO_IGNORE")
+                    lines.Add(line);
+                else if (line.StartsWith("TIME") && curSubtrack == "NO_IGNORE")
+                    lines.Add(line);
+                else if (line.StartsWith("NOTE") && curSubtrack == "NO_IGNORE")
+                {
+                    if (args[0] == "10")
+                        args[0] = "1";
+                    if (args[1] == "-1")
+                        args[1] = "0";
+
+                    lines.Add($"NOTE({args[0]}, {args[1]});");
+                }
+            }
+
+            return lines.ToArray();
         }
     }
 }
