@@ -5,10 +5,10 @@ build:
     project: DonDonLibrary.sln
 
 after_build:
-    - del ./DonDonLibrary/bin/Release/*.pdb
-    - del ./ScriptEditor/bin/Release/*.pdb
-    - 7z a ScriptEditor.zip ./DonDonLibrary/bin/Release/*
-    - move /DonDonLibrary/bin/Release/DonDonLibrary.dll DonDonLibrary.dll
+    - del DonDonLibrary\bin\Release\*.pdb
+    - del ScriptEditor\bin\Release\*.pdb
+    - 7z a ScriptEditor.zip .\DonDonLibrary\bin\Release\*
+    - move DonDonLibrary\bin\Release\DonDonLibrary.dll DonDonLibrary.dll
 
 artifacts:
     - path: DonDonLibrary.dll
