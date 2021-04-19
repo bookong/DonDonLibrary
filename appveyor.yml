@@ -9,8 +9,8 @@ after_build:
     - del ScriptEditor\bin\Release\*.pdb
     - 7z a ScriptEditor.zip .\ScriptEditor\bin\Release\*
     - move DonDonLibrary\bin\Release\DonDonLibrary.dll DonDonLibrary.dll
-    - rmdir /S DonDonLibrary\bin\
-    - rmdir /S ScriptEditor\bin\
+    - rmdir /S /Q DonDonLibrary\bin\
+    - rmdir /S /Q ScriptEditor\bin\
 
 artifacts:
     - path: DonDonLibrary.dll
