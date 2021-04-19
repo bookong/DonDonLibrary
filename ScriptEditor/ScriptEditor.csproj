@@ -46,6 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Diva\DivaNote.cs" />
+    <Compile Include="Diva\DivaScript\F\Opcode.cs" />
+    <Compile Include="Diva\DivaScript\F\Script.cs" />
+    <Compile Include="Diva\DSC.cs" />
     <Compile Include="EndiannessForm.cs">
       <SubType>Form</SubType>
     </Compile>

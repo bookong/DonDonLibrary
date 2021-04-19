@@ -43,10 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Chart\Misc\DivaNote.cs" />
-    <Compile Include="Chart\Misc\DivaScript\F\Opcode.cs" />
-    <Compile Include="Chart\Misc\DivaScript\F\Script.cs" />
-    <Compile Include="Chart\Misc\DSC.cs" />
     <Compile Include="Chart\Gen2.cs" />
     <Compile Include="Chart\UTS.cs" />
     <Compile Include="Chart\Types.cs" />
