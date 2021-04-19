@@ -107,7 +107,7 @@ namespace DonDonLibrary.Chart
 
             foreach (Gen2.Track track in fumenData.tracks)
             {
-                measure = 60 / track.bpm * 4 / 64;
+                measure = 60 / track.bpm * 4 / 32;
 
                 if (!firstTrack)
                     uts.Add("TRACK_END();");
