@@ -26,8 +26,9 @@ namespace DonDonLibrary.Chart.Gen2
     {
         public float time;
         public float bpm;
-        public int _unk;
+        public int trackLine;
         public int gogoFlag;
+        public int _unk;
         public int[] bunkis = new int[6];
         public float[] scrollSpeeds = new float[6];
         public SubTrack[] subtracks = new SubTrack[6];
@@ -50,7 +51,7 @@ namespace DonDonLibrary.Chart.Gen2
 
     public class Gen2
     {
-        public static Gen2Fumen Read(EndianBinaryReader reader)
+        public static Gen2Fumen Read(EndianBinaryReader reader, bool isOld)
         {
             Gen2Fumen fumen = new Gen2Fumen();
 
@@ -65,8 +66,10 @@ namespace DonDonLibrary.Chart.Gen2
 
                 track.time = reader.ReadSingle();
                 track.bpm = reader.ReadSingle();
-                track._unk = reader.ReadInt32();
+                track.trackLine = reader.ReadInt32();
                 track.gogoFlag = reader.ReadInt32();
+                if (isOld)
+                    track._unk = reader.ReadInt32();
                 for (int j = 0; j < 6; j++)
                     track.bunkis[j] = reader.ReadInt32();
                 for (int j = 0; j < 6; j++)

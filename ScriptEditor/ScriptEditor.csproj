@@ -50,6 +50,12 @@
     <Compile Include="Diva\DivaScript\F\Opcode.cs" />
     <Compile Include="Diva\DivaScript\F\Script.cs" />
     <Compile Include="Diva\DSC.cs" />
+    <Compile Include="Gen2EndiannessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gen2EndiannessForm.Designer.cs">
+      <DependentUpon>Gen2EndiannessForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EndiannessForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +70,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Gen2EndiannessForm.resx">
+      <DependentUpon>Gen2EndiannessForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EndiannessForm.resx">
       <DependentUpon>EndiannessForm.cs</DependentUpon>
     </EmbeddedResource>

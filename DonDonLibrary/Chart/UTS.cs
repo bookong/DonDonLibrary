@@ -112,7 +112,7 @@ namespace DonDonLibrary.Chart
                 if (!firstTrack)
                     uts.Add("TRACK_END();");
 
-                uts.Add($"TRACK2_START({StringFormat.Stringify(track.bpm)}, {StringFormat.Stringify(track.time)}, {track.gogoFlag});");
+                uts.Add($"TRACK2_START({StringFormat.Stringify(track.bpm)}, {StringFormat.Stringify(track.time)}, {track.gogoFlag}, {track.trackLine});");
 
                 for (int i = 0; i < 6; i++)
                 {
@@ -254,7 +254,7 @@ namespace DonDonLibrary.Chart
                 for(int i = 0; i < args.Length; i++) { args[i] = args[i].Replace(" ", "");  }
 
                 if (line.StartsWith("TRACK2_START"))
-                    lines.Add($"TRACK_START({args[0]}, {args[1]}, {args[2]}, 1);");
+                    lines.Add($"TRACK_START({args[0]}, {args[1]}, {args[2]}, {args[3]});");
                 else if (line.StartsWith("TRACK_END"))
                     lines.Add(line);
                 else if (line.StartsWith("SUBTRACK2_START"))

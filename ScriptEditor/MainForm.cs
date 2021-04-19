@@ -140,14 +140,25 @@ namespace ScriptEditor
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
                 Endianness endianness = Endianness.LittleEndian;
+                bool isOld = false;
+
                 dialog.InitialDirectory = @".\";
                 dialog.Filter = "All Files (*.*)|*.*";
                 dialog.FilterIndex = 1;
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    endianness = GetEndianness();
+                    using(Gen2EndiannessForm endiannessForm = new Gen2EndiannessForm())
+                    {
+                        if(endiannessForm.ShowDialog() == DialogResult.OK)
+                        {
+                            if (endiannessForm.endiannessBox.SelectedIndex == 1)
+                                endianness = Endianness.BigEndian;
+                            if (endiannessForm.extraIntFlag.Checked)
+                                isOld = true;
+                        }
+                    }
                     using (EndianBinaryReader reader = new EndianBinaryReader(File.Open(dialog.FileName, FileMode.Open), endianness))
-                        scriptBox.Lines = UTS.FromFumen(DonDonLibrary.Chart.Gen2.Gen2.Read(reader));
+                        scriptBox.Lines = UTS.FromFumen(DonDonLibrary.Chart.Gen2.Gen2.Read(reader, isOld));
                 }
             }
         }
