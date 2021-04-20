@@ -13,7 +13,6 @@ Modding library for the Taiko games<br>
 The code is currently in its initial phase and it's very unoptimized.<br>
 
 ## To-do
-* Implement TJA support on ScriptEditor <br>
 * Organize & optimize the code <br>
 * Create a wiki page for tools documentation
 
