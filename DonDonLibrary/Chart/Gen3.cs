@@ -17,6 +17,7 @@ namespace DonDonLibrary.Chart
         public short basePoint;
         public short addPoint;
         public float rollHoldTime = 0.0f;
+        public short balloonHitCount = -1;
         public float _absoluteTime;
         public int unk2 = 0;
         public int unk3 = 0;
@@ -73,10 +74,11 @@ namespace DonDonLibrary.Chart
                 note.addPoint = reader.ReadInt16();
                 note.rollHoldTime = reader.ReadSingle();
                 _notes.Add(note);
+
                 if (note.type == 6 || note.type == 9)
-                {
                     reader.SeekCurrent(8);
-                }
+                else if (note.type == 10)
+                    note.balloonHitCount = note.basePoint;
 
                 note._absoluteTime = note.time + _trackTime;
             }
@@ -190,8 +192,16 @@ namespace DonDonLibrary.Chart
                         writer.Write(note.type);
                         writer.Write(note.time);
                         writer.Write((double)0x00);
-                        writer.Write(note.basePoint);
-                        writer.Write(note.addPoint);
+                        if (note.type == 10)
+                        {
+                            writer.Write(note.balloonHitCount);
+                            writer.Write((short)0x00);
+                        }
+                        else
+                        {
+                            writer.Write(note.basePoint);
+                            writer.Write(note.addPoint);
+                        }
                         writer.Write(note.rollHoldTime);
                         if (note.type == 6 || note.type == 9)
                             writer.Write((double)0x00);

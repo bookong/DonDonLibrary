@@ -81,7 +81,7 @@ namespace DonDonLibrary.Chart
                             uts.Add($"SET_POINT_INCREASE({note.addPoint});");
                             addPnt = note.addPoint;
                         }
-                        uts.Add($"NOTE({note.type}, {StringFormat.Stringify(note.rollHoldTime)});");
+                        uts.Add($"NOTE({note.type}, {StringFormat.Stringify(note.rollHoldTime)}, {note.balloonHitCount});");
                     }
 
                     uts.Add("SUBTRACK_END();");
@@ -210,6 +210,7 @@ namespace DonDonLibrary.Chart
                     note.rollHoldTime = StringFormat.Destringify(args[1]);
                     note.basePoint = pointBase;
                     note.addPoint = pointAdd;
+                    note.balloonHitCount = short.Parse(args[2]);
                     note.unk = 0;
                     note.unk1 = 0;
                     note.unk2 = 0;
@@ -281,12 +282,12 @@ namespace DonDonLibrary.Chart
                     lines.Add(line);
                 else if (line.StartsWith("NOTE") && curSubtrack == "NO_IGNORE")
                 {
-                    if (args[0] == "10")
-                        args[0] = "1";
                     if (args[1] == "-1")
                         args[1] = "0";
+                    if (args[2] == "-1")
+                        args[2] = "0";
 
-                    lines.Add($"NOTE({args[0]}, {args[1]});");
+                    lines.Add($"NOTE({args[0]}, {args[1]}, {args[2]});");
                 }
             }
 
