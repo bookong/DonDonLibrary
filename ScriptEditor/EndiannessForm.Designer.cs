@@ -29,6 +29,7 @@ namespace ScriptEditor
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EndiannessForm));
             this.openFileButton = new System.Windows.Forms.Button();
             this.endiannessBox = new System.Windows.Forms.ComboBox();
             this.endSelText = new System.Windows.Forms.Label();
@@ -72,6 +73,7 @@ namespace ScriptEditor
             this.Controls.Add(this.endSelText);
             this.Controls.Add(this.endiannessBox);
             this.Controls.Add(this.openFileButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EndiannessForm";
             this.Text = "Endianness";
             this.ResumeLayout(false);
