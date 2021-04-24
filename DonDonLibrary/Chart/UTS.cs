@@ -18,7 +18,6 @@ namespace DonDonLibrary.Chart
         {
             cmd = cmd.Trim(';');
             cmd = cmd.Trim(')');
-            Console.WriteLine(cmd);
             string[] cmd_spl = cmd.Split('(');
             cmd_spl[1] = cmd_spl[1].Trim();
 
