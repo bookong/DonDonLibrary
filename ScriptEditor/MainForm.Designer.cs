@@ -39,12 +39,14 @@ namespace ScriptEditor
             this.openTaikoScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDscMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveTaikoScriptToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.fumenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveGen3MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scriptBox = new System.Windows.Forms.TextBox();
+            this.saveTaikoScriptToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.convertMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gen2Gen3MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scriptBox = new System.Windows.Forms.TextBox();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.applyOffsetMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,7 +54,8 @@ namespace ScriptEditor
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.convertMenuItem});
+            this.convertMenuItem,
+            this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(669, 25);
@@ -125,13 +128,6 @@ namespace ScriptEditor
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
-            // saveTaikoScriptToolStripMenuItem1
-            // 
-            this.saveTaikoScriptToolStripMenuItem1.Name = "saveTaikoScriptToolStripMenuItem1";
-            this.saveTaikoScriptToolStripMenuItem1.Size = new System.Drawing.Size(193, 22);
-            this.saveTaikoScriptToolStripMenuItem1.Text = "UniversalTaikoScript";
-            this.saveTaikoScriptToolStripMenuItem1.Click += new System.EventHandler(this.saveTaikoScriptToolStripMenuItem1_Click);
-            // 
             // fumenToolStripMenuItem1
             // 
             this.fumenToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -147,17 +143,12 @@ namespace ScriptEditor
             this.saveGen3MenuItem.Text = "3rd Generation";
             this.saveGen3MenuItem.Click += new System.EventHandler(this.saveGen3MenuItem_Click);
             // 
-            // scriptBox
+            // saveTaikoScriptToolStripMenuItem1
             // 
-            this.scriptBox.BackColor = System.Drawing.SystemColors.Window;
-            this.scriptBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.scriptBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.scriptBox.Location = new System.Drawing.Point(13, 28);
-            this.scriptBox.Multiline = true;
-            this.scriptBox.Name = "scriptBox";
-            this.scriptBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.scriptBox.Size = new System.Drawing.Size(644, 427);
-            this.scriptBox.TabIndex = 1;
+            this.saveTaikoScriptToolStripMenuItem1.Name = "saveTaikoScriptToolStripMenuItem1";
+            this.saveTaikoScriptToolStripMenuItem1.Size = new System.Drawing.Size(193, 22);
+            this.saveTaikoScriptToolStripMenuItem1.Text = "UniversalTaikoScript";
+            this.saveTaikoScriptToolStripMenuItem1.Click += new System.EventHandler(this.saveTaikoScriptToolStripMenuItem1_Click);
             // 
             // convertMenuItem
             // 
@@ -173,6 +164,33 @@ namespace ScriptEditor
             this.gen2Gen3MenuItem.Size = new System.Drawing.Size(180, 22);
             this.gen2Gen3MenuItem.Text = "Gen 2 -> Gen 3";
             this.gen2Gen3MenuItem.Click += new System.EventHandler(this.gen2Gen3MenuItem_Click);
+            // 
+            // scriptBox
+            // 
+            this.scriptBox.BackColor = System.Drawing.SystemColors.Window;
+            this.scriptBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scriptBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.scriptBox.Location = new System.Drawing.Point(13, 28);
+            this.scriptBox.Multiline = true;
+            this.scriptBox.Name = "scriptBox";
+            this.scriptBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.scriptBox.Size = new System.Drawing.Size(644, 427);
+            this.scriptBox.TabIndex = 1;
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.applyOffsetMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 21);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // applyOffsetMenuItem
+            // 
+            this.applyOffsetMenuItem.Name = "applyOffsetMenuItem";
+            this.applyOffsetMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.applyOffsetMenuItem.Text = "Apply Offset";
+            this.applyOffsetMenuItem.Click += new System.EventHandler(this.applyOffsetMenuItem_Click);
             // 
             // MainForm
             // 
@@ -209,6 +227,8 @@ namespace ScriptEditor
         private System.Windows.Forms.ToolStripMenuItem openGen2MenuItem;
         private System.Windows.Forms.ToolStripMenuItem convertMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gen2Gen3MenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem applyOffsetMenuItem;
     }
 }
 

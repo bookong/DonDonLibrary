@@ -86,6 +86,7 @@ namespace ScriptEditor
             this.Controls.Add(this.endiannessBox);
             this.Controls.Add(this.openFileButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Gen2EndiannessForm";
             this.Text = "Settings";
             this.ResumeLayout(false);

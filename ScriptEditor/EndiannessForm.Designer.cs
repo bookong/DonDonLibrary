@@ -51,7 +51,7 @@ namespace ScriptEditor
             this.endiannessBox.Items.AddRange(new object[] {
             "Little Endian",
             "Big Endian"});
-            this.endiannessBox.Location = new System.Drawing.Point(68, 37);
+            this.endiannessBox.Location = new System.Drawing.Point(55, 37);
             this.endiannessBox.Name = "endiannessBox";
             this.endiannessBox.Size = new System.Drawing.Size(142, 21);
             this.endiannessBox.TabIndex = 1;
@@ -59,7 +59,7 @@ namespace ScriptEditor
             // endSelText
             // 
             this.endSelText.AutoSize = true;
-            this.endSelText.Location = new System.Drawing.Point(65, 21);
+            this.endSelText.Location = new System.Drawing.Point(52, 21);
             this.endSelText.Name = "endSelText";
             this.endSelText.Size = new System.Drawing.Size(145, 13);
             this.endSelText.TabIndex = 2;
@@ -74,6 +74,7 @@ namespace ScriptEditor
             this.Controls.Add(this.endiannessBox);
             this.Controls.Add(this.openFileButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "EndiannessForm";
             this.Text = "Endianness";
             this.ResumeLayout(false);
@@ -83,7 +84,7 @@ namespace ScriptEditor
 
         #endregion
 
-        private System.Windows.Forms.Button openFileButton;
+        public System.Windows.Forms.Button openFileButton;
         public System.Windows.Forms.ComboBox endiannessBox;
         private System.Windows.Forms.Label endSelText;
     }

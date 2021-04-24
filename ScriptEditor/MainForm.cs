@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using DonDonLibrary.IO;
 using DonDonLibrary.Chart;
 using DonDonLibrary.Chart.Misc.DIVA;
+using DonDonLibrary.Utilities;
 
 namespace ScriptEditor
 {
@@ -14,10 +15,12 @@ namespace ScriptEditor
             InitializeComponent();
         }
 
-        private static Endianness GetEndianness()
+        private static Endianness GetEndianness(int mode = -1)
         {
             using (EndiannessForm endDialog = new EndiannessForm())
             {
+                if (mode != -1)
+                    endDialog.openFileButton.Text = "Save";
                 if (endDialog.ShowDialog() == DialogResult.OK)
                 {
                     if (endDialog.endiannessBox.SelectedIndex == 1)
@@ -106,7 +109,7 @@ namespace ScriptEditor
                             if (!dialog.FileName.ToLower().EndsWith(".bin"))
                                 dialog.FileName += ".bin";
 
-                        endianness = GetEndianness();
+                        endianness = GetEndianness(0);
 
                         using (EndianBinaryWriter writer = new EndianBinaryWriter(File.Open(dialog.FileName, FileMode.Create), endianness))
                         {
@@ -166,6 +169,66 @@ namespace ScriptEditor
         private void gen2Gen3MenuItem_Click(object sender, EventArgs e)
         {
             scriptBox.Lines = UTS.ConvertGen2ToGen3(scriptBox.Lines);
+        }
+
+        private void applyOffsetMenuItem_Click(object sender, EventArgs e)
+        {
+            Gen3Fumen fumen = UTS.ToFumen(scriptBox.Lines);
+            using(OffsetterForm offsetter = new OffsetterForm())
+            {
+                for(int i = 0; i < fumen.tracks.Count; i++)
+                    offsetter.applyOn.Items.Add($"Track #{i}");
+                offsetter.offsetBox.Text = "0.0";
+                offsetter.applyOn.SelectedIndex = 0;
+
+                if(offsetter.ShowDialog() == DialogResult.OK)
+                {
+                    float offset = StringFormat.Destringify(offsetter.offsetBox.Text);
+
+                    if (offsetter.applyOn.SelectedIndex == 0 || offsetter.applyOn.SelectedIndex == 1)
+                    {
+                        if(offsetter.applyToTrack.Checked)
+                        {
+                            for(int i = 0; i < fumen.tracks.Count; i++)
+                                fumen.tracks[i].time = fumen.tracks[i].time + offset;
+                        }
+                        else if(offsetter.applyToNote.Checked)
+                        {
+                            for (int i = 0; i < fumen.tracks.Count; i++)
+                            {
+                                for(int j = 0; j < fumen.tracks[i].normalTrack.notes.Count; j++)
+                                    fumen.tracks[i].normalTrack.notes[j].time = fumen.tracks[i].normalTrack.notes[j].time + offset;
+
+                                for (int j = 0; j < fumen.tracks[i].professionalTrack.notes.Count; j++)
+                                    fumen.tracks[i].professionalTrack.notes[j].time = fumen.tracks[i].professionalTrack.notes[j].time + offset;
+
+                                for (int j = 0; j < fumen.tracks[i].masterTrack.notes.Count; j++)
+                                    fumen.tracks[i].masterTrack.notes[j].time = fumen.tracks[i].masterTrack.notes[j].time + offset;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        int trackNum = offsetter.applyOn.SelectedIndex - 2;
+
+                        if(offsetter.applyToTrack.Checked)
+                            fumen.tracks[trackNum].time = fumen.tracks[trackNum].time + offset;
+                        else if(offsetter.applyToNote.Checked)
+                        {
+                            for (int j = 0; j < fumen.tracks[trackNum].normalTrack.notes.Count; j++)
+                                fumen.tracks[trackNum].normalTrack.notes[j].time = fumen.tracks[trackNum].normalTrack.notes[j].time + offset;
+
+                            for (int j = 0; j < fumen.tracks[trackNum].professionalTrack.notes.Count; j++)
+                                fumen.tracks[trackNum].professionalTrack.notes[j].time = fumen.tracks[trackNum].professionalTrack.notes[j].time + offset;
+
+                            for (int j = 0; j < fumen.tracks[trackNum].masterTrack.notes.Count; j++)
+                                fumen.tracks[trackNum].masterTrack.notes[j].time = fumen.tracks[trackNum].masterTrack.notes[j].time + offset;
+                        }
+                    }
+                }
+
+                scriptBox.Lines = UTS.FromFumen(fumen);
+            }
         }
     }
 }
