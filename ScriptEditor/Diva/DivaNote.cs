@@ -9,7 +9,7 @@ namespace DonDonLibrary.Chart.Misc
         internal static int GetRandom()
         {
             int num = random.Next(1, 8);
-            while (num == 7)
+            while (num == 6)
                 num = random.Next(1, 8);
             return num;
         }
