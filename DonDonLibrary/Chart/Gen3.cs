@@ -48,7 +48,7 @@ namespace DonDonLibrary.Chart
     public struct Header
     {
         public float[] hanteiData;
-        public int[] unknownHeaderData;
+        public int[] headerData;
         public int trackCount;
         public int unk;
     }
@@ -91,7 +91,7 @@ namespace DonDonLibrary.Chart
 
             // reading the header data
             fumenData.header.hanteiData = reader.ReadSingles(108);
-            fumenData.header.unknownHeaderData = reader.ReadInt32s(20);
+            fumenData.header.headerData = reader.ReadInt32s(20);
             //reader.SeekBegin(0);
             //reader.ReadBytes(512).ToString();
             int trackCount = reader.ReadInt32();
@@ -138,20 +138,10 @@ namespace DonDonLibrary.Chart
         {
             SubTrack curSubTrack = new SubTrack();
 
-            if (File.Exists("OPENFILECACHE"))
-            {
-                using (var reader = new EndianBinaryReader(File.Open("OPENFILECACHE", FileMode.Open), Endianness.LittleEndian))
-                {
-                    writer.Write(reader.ReadBytes(512));
-                }
-            }
-            else
-            {
-                for (int i = 0; i < 512; i++)
-                {
-                    writer.Write((byte)0x00);
-                }
-            }
+            foreach(float f in fumenData.header.hanteiData)
+                writer.Write(f);
+            foreach (int i in fumenData.header.headerData)
+                writer.Write(i);
 
             writer.Write(fumenData.tracks.Count);
             writer.Write(0x563740);

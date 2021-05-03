@@ -14,7 +14,7 @@ namespace DonDonLibrary.Chart
      * Created by me */
     public class UTS
     {
-        public static string[] GetCommandArgs(string cmd)
+        private static string[] GetCommandArgs(string cmd)
         {
             cmd = cmd.Trim(';');
             cmd = cmd.Trim(')');
@@ -22,6 +22,18 @@ namespace DonDonLibrary.Chart
             cmd_spl[1] = cmd_spl[1].Trim();
 
             return cmd_spl[1].Split(',');
+        }
+
+        public static string[] GetHeaderData(int[] header)
+        {
+            string[] headerData = new string[4];
+
+            headerData[0] = $"HAS_DIVERGE_PATH({header[0]});";
+            headerData[1] = $"HP_SETTINGS({header[1]}, {header[2]}, {header[3]}, {header[4]}, {header[5]});";
+            headerData[2] = $"COMBO_SETTINGS({header[6]}, {header[7]}, {header[8]});";
+            headerData[3] = $"DIVERGE_POINTS({header[9]}, {header[10]}, {header[11]}, {header[12]}, {header[13]}, {header[14]}, {header[15]}, {header[16]}, {header[17]}, {header[18]});";
+
+            return headerData;
         }
 
         public static string[] FromFumen(Gen3Fumen fumenData)
@@ -34,6 +46,9 @@ namespace DonDonLibrary.Chart
             int addPnt = -1;
             SubTrack curSubTrack = new SubTrack();
             string[] subTrackLabels = { "NORMAL", "PROFESSIONAL", "MASTER" };
+
+            foreach (string cmd in GetHeaderData(fumenData.header.headerData))
+                uts.Add(cmd);
 
             foreach (Track track in fumenData.tracks)
             {
@@ -98,7 +113,6 @@ namespace DonDonLibrary.Chart
         {
             List<String> uts = new List<string>();
             bool firstTrack = true;
-            // -1000 to assure that the time will always be greater than
             int point = -1;
             float measure = 0.0f;
             SubTrack curSubTrack = new SubTrack();
@@ -157,12 +171,27 @@ namespace DonDonLibrary.Chart
             short pointBase = 0;
             short pointAdd = 0;
 
-            foreach(string rawcmd in uts)
+            fumenData.header.headerData = new int[20];
+            fumenData.header.headerData[18] = 20;
+            fumenData.header.headerData[19] = 0;
+
+            foreach (string rawcmd in uts)
             {
                 string cmd = rawcmd.ToUpper();
                 string[] args = GetCommandArgs(cmd);
 
-                if (cmd.StartsWith("TRACK_START"))
+                if (cmd.StartsWith("HAS_DIVERGE_PATH"))
+                    fumenData.header.headerData[0] = int.Parse(args[0]);
+                else if (cmd.StartsWith("HP_SETTINGS"))
+                    for (int i = 0; i < 5; i++)
+                        fumenData.header.headerData[i + 1] = int.Parse(args[i]);
+                else if (cmd.StartsWith("COMBO_SETTINGS"))
+                    for (int i = 0; i < 3; i++)
+                        fumenData.header.headerData[i + 6] = int.Parse(args[i]);
+                else if (cmd.StartsWith("DIVERGE_POINTS"))
+                    for (int i = 0; i < 10; i++)
+                        fumenData.header.headerData[i + 9] = int.Parse(args[i]);
+                else if (cmd.StartsWith("TRACK_START"))
                 {
                     Track track = new Track();
                     track.bpm = StringFormat.Destringify(args[0]);
@@ -241,14 +270,17 @@ namespace DonDonLibrary.Chart
             return fumenData;
         }
 
-        public static string[] ConvertGen2ToGen3(string[] _lines)
+        public static string[] ConvertGen2ToGen3(string[] _lines, Gen3Fumen auxiliaryFumen)
         {
             List<string> lines = new List<string>();
             string curSubtrack = "";
             string[] args;
             string noteType = "";
 
-            foreach(string line in _lines)
+            foreach (string cmd in GetHeaderData(auxiliaryFumen.header.headerData))
+                lines.Add(cmd);
+
+            foreach (string line in _lines)
             {
                 args = GetCommandArgs(line);
                 for(int i = 0; i < args.Length; i++) { args[i] = args[i].Replace(" ", "");  }

@@ -10,6 +10,8 @@ namespace ScriptEditor
 {
     public partial class MainForm : Form
     {
+        public Gen3Fumen lastOpenedGen3 = null;
+
         public MainForm()
         {
             InitializeComponent();
@@ -46,11 +48,7 @@ namespace ScriptEditor
                     {
                         Gen3Fumen fumenData = Gen3.Read(reader);
                         scriptBox.Lines = UTS.FromFumen(fumenData);
-                        using(EndianBinaryWriter writer = new EndianBinaryWriter(File.Open("OPENFILECACHE", FileMode.Create), Endianness.LittleEndian))
-                        {
-                            writer.Write(fumenData.header.hanteiData);
-                            writer.Write(fumenData.header.unknownHeaderData);
-                        }
+                        lastOpenedGen3 = fumenData;
                     }
                 }
             }
@@ -111,13 +109,12 @@ namespace ScriptEditor
 
                         endianness = GetEndianness(0);
 
-                        using (EndianBinaryWriter writer = new EndianBinaryWriter(File.Open(dialog.FileName, FileMode.Create), endianness))
-                        {
-                            if (!File.Exists("OPENFILECACHE"))
-                                MessageBox.Show("Header cache (created when loading a fumen) does not exist. This will write a set of 0x00 on the header instead, possibly causing errors.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        Gen3Fumen fumen = UTS.ToFumen(scriptBox.Lines);
+                        fumen.header.hanteiData = lastOpenedGen3.header.hanteiData;
+                        fumen.header.headerData = lastOpenedGen3.header.headerData;
 
-                            Gen3.Write(writer, UTS.ToFumen(scriptBox.Lines));
-                        }
+                        using (EndianBinaryWriter writer = new EndianBinaryWriter(File.Open(dialog.FileName, FileMode.Create), endianness))
+                            Gen3.Write(writer, fumen);
                     }
                 }
             }
@@ -125,15 +122,20 @@ namespace ScriptEditor
 
         private void openDscMenuItem_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dialog = new OpenFileDialog())
+            if (lastOpenedGen3 == null)
+                MessageBox.Show("Please open a Gen 3 fumen first.", "No header information", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
             {
-                dialog.InitialDirectory = @".\";
-                dialog.Filter = "DSC file (*.dsc)|*.dsc";
-                dialog.FilterIndex = 1;
-                if (dialog.ShowDialog() == DialogResult.OK)
+                using (OpenFileDialog dialog = new OpenFileDialog())
                 {
-                    using (EndianBinaryReader reader = new EndianBinaryReader(File.Open(dialog.FileName, FileMode.Open), Endianness.LittleEndian))
-                        scriptBox.Lines = UTS.FromFumen(DSC.ToFumen(reader));
+                    dialog.InitialDirectory = @".\";
+                    dialog.Filter = "DSC file (*.dsc)|*.dsc";
+                    dialog.FilterIndex = 1;
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        using (EndianBinaryReader reader = new EndianBinaryReader(File.Open(dialog.FileName, FileMode.Open), Endianness.LittleEndian))
+                            scriptBox.Lines = UTS.FromFumen(DSC.ToFumen(reader, lastOpenedGen3));
+                    }
                 }
             }
         }
@@ -168,7 +170,9 @@ namespace ScriptEditor
 
         private void gen2Gen3MenuItem_Click(object sender, EventArgs e)
         {
-            scriptBox.Lines = UTS.ConvertGen2ToGen3(scriptBox.Lines);
+            if (lastOpenedGen3 == null)
+                MessageBox.Show("Please open a Gen 3 fumen first.", "No header information", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            scriptBox.Lines = UTS.ConvertGen2ToGen3(scriptBox.Lines, lastOpenedGen3);
         }
 
         private void applyOffsetMenuItem_Click(object sender, EventArgs e)
@@ -228,6 +232,22 @@ namespace ScriptEditor
                 }
 
                 scriptBox.Lines = UTS.FromFumen(fumen);
+            }
+        }
+
+        private void timingEditorMenuItem_Click(object sender, EventArgs e)
+        {
+            if(lastOpenedGen3 == null)
+                MessageBox.Show("No Gen3 fumen was opened. The program cannot proceed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
+            {
+                using(TimingEditorForm editor = new TimingEditorForm())
+                {
+                    editor.GetTiming(lastOpenedGen3.header.hanteiData);
+
+                    if(editor.ShowDialog() == DialogResult.OK)
+                        lastOpenedGen3.header.hanteiData = editor.hanteiData;
+                }
             }
         }
     }

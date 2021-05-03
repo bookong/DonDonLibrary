@@ -10,7 +10,7 @@ namespace DonDonLibrary.Chart.Misc.DIVA
 {
     public class DSC
     {
-        public static Gen3Fumen ToFumen(EndianBinaryReader reader)
+        public static Gen3Fumen ToFumen(EndianBinaryReader reader, Gen3Fumen auxiliaryFumen)
         {
             int[] formats = { 302121504 };
             int signature = reader.ReadInt32();
@@ -25,6 +25,8 @@ namespace DonDonLibrary.Chart.Misc.DIVA
             float time = 0;
             float bpm = 0;
 
+            fumenData.header.headerData = auxiliaryFumen.header.headerData;
+            fumenData.header.hanteiData = auxiliaryFumen.header.hanteiData;
 
             if (!formats.Contains(signature))
                 throw new Exception("DSC format not suported!");
