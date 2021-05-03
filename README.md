@@ -1,17 +1,18 @@
 # DonDonLibrary
-Modding library for the Taiko games
+Modding library for the Taiko games<br>
 
-## How to compile
+## Builds
+### Pre-compiled binaries
+* [Get the latest stable release here](https://github.com/mrcloverthecoder/DonDonLibrary/releases/latest)<br>
+* [Get the latest unstable release here](https://ci.appveyor.com/project/mrcloverthecoder/dondonlibrary/build/artifacts)<br>
+### Compiling
 1. Install [Visual Studio 2019](https://visualstudio.microsoft.com/downloads/) or later. Make sure to install .NET 4.7.2 Targeting Pack. <br>
-2. Press Build > Build Solution.
+2. Build the solution.
 
 ## Advices
 The code is currently in its initial phase and it's very unoptimized.<br>
 
 ## To-do
-* Finish DatabaseEditor <br>
-* Research other generation's FUMEN format <br>
-* Implement TJA support on ScriptEditor <br>
 * Organize & optimize the code <br>
 * Create a wiki page for tools documentation
 

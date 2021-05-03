@@ -1,0 +1,19 @@
+image: Visual Studio 2019
+configuration: Release
+
+build:
+    project: DonDonLibrary.sln
+
+after_build:
+    - del DonDonLibrary\bin\Release\*.pdb
+    - del ScriptEditor\bin\Release\*.pdb
+    - 7z a ScriptEditor.zip .\ScriptEditor\bin\Release\*
+    - move DonDonLibrary\bin\Release\DonDonLibrary.dll DonDonLibrary.dll
+    - rmdir /S /Q DonDonLibrary\bin\
+    - rmdir /S /Q ScriptEditor\bin\
+
+artifacts:
+    - path: DonDonLibrary.dll
+      name: DonDonLibrary
+    - path: ScriptEditor.zip
+      name: ScriptEditor

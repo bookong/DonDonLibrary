@@ -43,16 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Chart\Misc\DivaNote.cs" />
-    <Compile Include="Chart\Misc\DivaScript\FT\Opcode.cs" />
-    <Compile Include="Chart\Misc\DivaScript\FT\Script.cs" />
-    <Compile Include="Chart\Misc\DivaScript\F\Opcode.cs" />
-    <Compile Include="Chart\Misc\DivaScript\F\Script.cs" />
-    <Compile Include="Chart\Misc\DSC.cs" />
+    <Compile Include="Chart\Gen2.cs" />
     <Compile Include="Chart\UTS.cs" />
     <Compile Include="Chart\Types.cs" />
-    <Compile Include="Chart\Structs\Gen3.cs" />
-    <Compile Include="Chart\Fumen.cs" />
+    <Compile Include="Chart\Gen3.cs" />
     <Compile Include="Database\MusicInfo.cs" />
     <Compile Include="IO\Utilities\AlignmentHelper.cs" />
     <Compile Include="IO\Utilities\BitHelper.cs" />

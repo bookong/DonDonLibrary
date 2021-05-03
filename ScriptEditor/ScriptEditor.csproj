@@ -46,6 +46,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Diva\DivaNote.cs" />
+    <Compile Include="Diva\DivaScript\F\Opcode.cs" />
+    <Compile Include="Diva\DivaScript\F\Script.cs" />
+    <Compile Include="Diva\DSC.cs" />
+    <Compile Include="OffsetterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OffsetterForm.Designer.cs">
+      <DependentUpon>OffsetterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gen2EndiannessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gen2EndiannessForm.Designer.cs">
+      <DependentUpon>Gen2EndiannessForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EndiannessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EndiannessForm.Designer.cs">
+      <DependentUpon>EndiannessForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,8 +76,23 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimingEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimingEditorForm.Designer.cs">
+      <DependentUpon>TimingEditorForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Gen2EndiannessForm.resx">
+      <DependentUpon>Gen2EndiannessForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EndiannessForm.resx">
+      <DependentUpon>EndiannessForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OffsetterForm.resx">
+      <DependentUpon>OffsetterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -66,6 +103,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TimingEditorForm.resx">
+      <DependentUpon>TimingEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

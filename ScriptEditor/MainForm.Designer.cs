@@ -34,17 +34,20 @@ namespace ScriptEditor
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fumenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openGen2MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gen3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openTaikoScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDscMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openTjaMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveTaikoScriptToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.fumenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveGen3MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveTaikoScriptToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.convertMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gen2Gen3MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.genMeasureDivMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.applyOffsetMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scriptBox = new System.Windows.Forms.TextBox();
+            this.timingEditorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,6 +55,7 @@ namespace ScriptEditor
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.convertMenuItem,
             this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -74,63 +78,56 @@ namespace ScriptEditor
             this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fumenToolStripMenuItem,
             this.openTaikoScriptToolStripMenuItem,
-            this.openDscMenuItem,
-            this.openTjaMenuItem});
+            this.openDscMenuItem});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // fumenToolStripMenuItem
             // 
             this.fumenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openGen2MenuItem,
             this.gen3ToolStripMenuItem});
             this.fumenToolStripMenuItem.Name = "fumenToolStripMenuItem";
-            this.fumenToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.fumenToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.fumenToolStripMenuItem.Text = "Fumen";
+            // 
+            // openGen2MenuItem
+            // 
+            this.openGen2MenuItem.Name = "openGen2MenuItem";
+            this.openGen2MenuItem.Size = new System.Drawing.Size(166, 22);
+            this.openGen2MenuItem.Text = "2nd Generation";
+            this.openGen2MenuItem.Click += new System.EventHandler(this.openGen2MenuItem_Click);
             // 
             // gen3ToolStripMenuItem
             // 
             this.gen3ToolStripMenuItem.Name = "gen3ToolStripMenuItem";
-            this.gen3ToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.gen3ToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.gen3ToolStripMenuItem.Text = "3rd Generation";
             this.gen3ToolStripMenuItem.Click += new System.EventHandler(this.gen3ToolStripMenuItem_Click);
             // 
             // openTaikoScriptToolStripMenuItem
             // 
             this.openTaikoScriptToolStripMenuItem.Name = "openTaikoScriptToolStripMenuItem";
-            this.openTaikoScriptToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.openTaikoScriptToolStripMenuItem.Text = "TaikoScript";
+            this.openTaikoScriptToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.openTaikoScriptToolStripMenuItem.Text = "UniversalTaikoScript";
             this.openTaikoScriptToolStripMenuItem.Click += new System.EventHandler(this.openTaikoScriptToolStripMenuItem_Click);
             // 
             // openDscMenuItem
             // 
             this.openDscMenuItem.Name = "openDscMenuItem";
-            this.openDscMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.openDscMenuItem.Size = new System.Drawing.Size(193, 22);
             this.openDscMenuItem.Text = "DSC";
             this.openDscMenuItem.Click += new System.EventHandler(this.openDscMenuItem_Click);
-            // 
-            // openTjaMenuItem
-            // 
-            this.openTjaMenuItem.Name = "openTjaMenuItem";
-            this.openTjaMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.openTjaMenuItem.Text = "TJA [Experimental]";
-            this.openTjaMenuItem.Click += new System.EventHandler(this.openTjaMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveTaikoScriptToolStripMenuItem1,
-            this.fumenToolStripMenuItem1});
+            this.fumenToolStripMenuItem1,
+            this.saveTaikoScriptToolStripMenuItem1});
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.saveToolStripMenuItem.Text = "Save";
-            // 
-            // saveTaikoScriptToolStripMenuItem1
-            // 
-            this.saveTaikoScriptToolStripMenuItem1.Name = "saveTaikoScriptToolStripMenuItem1";
-            this.saveTaikoScriptToolStripMenuItem1.Size = new System.Drawing.Size(193, 22);
-            this.saveTaikoScriptToolStripMenuItem1.Text = "UniversalTaikoScript";
-            this.saveTaikoScriptToolStripMenuItem1.Click += new System.EventHandler(this.saveTaikoScriptToolStripMenuItem1_Click);
             // 
             // fumenToolStripMenuItem1
             // 
@@ -147,21 +144,43 @@ namespace ScriptEditor
             this.saveGen3MenuItem.Text = "3rd Generation";
             this.saveGen3MenuItem.Click += new System.EventHandler(this.saveGen3MenuItem_Click);
             // 
+            // saveTaikoScriptToolStripMenuItem1
+            // 
+            this.saveTaikoScriptToolStripMenuItem1.Name = "saveTaikoScriptToolStripMenuItem1";
+            this.saveTaikoScriptToolStripMenuItem1.Size = new System.Drawing.Size(193, 22);
+            this.saveTaikoScriptToolStripMenuItem1.Text = "UniversalTaikoScript";
+            this.saveTaikoScriptToolStripMenuItem1.Click += new System.EventHandler(this.saveTaikoScriptToolStripMenuItem1_Click);
+            // 
+            // convertMenuItem
+            // 
+            this.convertMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.gen2Gen3MenuItem});
+            this.convertMenuItem.Name = "convertMenuItem";
+            this.convertMenuItem.Size = new System.Drawing.Size(61, 21);
+            this.convertMenuItem.Text = "Convert";
+            // 
+            // gen2Gen3MenuItem
+            // 
+            this.gen2Gen3MenuItem.Name = "gen2Gen3MenuItem";
+            this.gen2Gen3MenuItem.Size = new System.Drawing.Size(153, 22);
+            this.gen2Gen3MenuItem.Text = "Gen 2 -> Gen 3";
+            this.gen2Gen3MenuItem.Click += new System.EventHandler(this.gen2Gen3MenuItem_Click);
+            // 
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.genMeasureDivMenuItem});
+            this.applyOffsetMenuItem,
+            this.timingEditorMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 21);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
-            // genMeasureDivMenuItem
+            // applyOffsetMenuItem
             // 
-            this.genMeasureDivMenuItem.Name = "genMeasureDivMenuItem";
-            this.genMeasureDivMenuItem.Size = new System.Drawing.Size(246, 22);
-            this.genMeasureDivMenuItem.Text = "(WIP) Generate Measure Division";
-            this.genMeasureDivMenuItem.ToolTipText = "Do not use this on multi-BPM songs!";
-            this.genMeasureDivMenuItem.Click += new System.EventHandler(this.genMeasureDivMenuItem_Click);
+            this.applyOffsetMenuItem.Name = "applyOffsetMenuItem";
+            this.applyOffsetMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.applyOffsetMenuItem.Text = "Apply Offset";
+            this.applyOffsetMenuItem.Click += new System.EventHandler(this.applyOffsetMenuItem_Click);
             // 
             // scriptBox
             // 
@@ -169,11 +188,19 @@ namespace ScriptEditor
             this.scriptBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.scriptBox.ForeColor = System.Drawing.SystemColors.WindowText;
             this.scriptBox.Location = new System.Drawing.Point(13, 28);
+            this.scriptBox.MaxLength = 100000;
             this.scriptBox.Multiline = true;
             this.scriptBox.Name = "scriptBox";
             this.scriptBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.scriptBox.Size = new System.Drawing.Size(644, 427);
             this.scriptBox.TabIndex = 1;
+            // 
+            // timingEditorMenuItem
+            // 
+            this.timingEditorMenuItem.Name = "timingEditorMenuItem";
+            this.timingEditorMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.timingEditorMenuItem.Text = "Timing Editor";
+            this.timingEditorMenuItem.Click += new System.EventHandler(this.timingEditorMenuItem_Click);
             // 
             // MainForm
             // 
@@ -206,10 +233,13 @@ namespace ScriptEditor
         private System.Windows.Forms.ToolStripMenuItem openTaikoScriptToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fumenToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem saveGen3MenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem genMeasureDivMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openDscMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openTjaMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openGen2MenuItem;
+        private System.Windows.Forms.ToolStripMenuItem convertMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gen2Gen3MenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem applyOffsetMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem timingEditorMenuItem;
     }
 }
 
