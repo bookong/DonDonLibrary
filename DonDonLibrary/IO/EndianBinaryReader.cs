@@ -13,10 +13,10 @@ namespace DonDonLibrary.IO
 {
     public class EndianBinaryReader : BinaryReader
     {
-        private StringBuilder mStringBuilder;
         private Endianness mEndianness;
         private Encoding mEncoding;
         private Stack<long> mBaseOffset;
+        private List<byte> mStringBuilder;
 
         public Endianness Endianness
         {
@@ -62,11 +62,17 @@ namespace DonDonLibrary.IO
 
         private void Init(Encoding encoding, Endianness endianness)
         {
-            mStringBuilder = new StringBuilder();
+            mStringBuilder = new List<byte>();
             mEncoding = encoding;
             Endianness = endianness;
             mBaseOffset = new Stack<long>();
             mBaseOffset.Push( 0 );
+        }
+
+        public void Align(int alignment)
+        {
+            while (Position % alignment != 0)
+                SeekCurrent(1);
         }
 
         public void Seek(long offset, SeekOrigin origin)
@@ -301,13 +307,15 @@ namespace DonDonLibrary.IO
         {
             mStringBuilder.Clear();
 
+            // For some reason StringBuilder is breaking japanese characters so
+            // I replaced it with List<byte> and I'm using mEncoding now
             switch (format)
             {
                 case StringBinaryFormat.NullTerminated:
                     {
                         byte b;
                         while ((b = ReadByte()) != 0)
-                            mStringBuilder.Append((char)b);
+                            mStringBuilder.Add(b);
                     }
                     break;
 
@@ -325,7 +333,7 @@ namespace DonDonLibrary.IO
                                 terminated = true;
 
                             if ( !terminated )
-                                mStringBuilder.Append( ( char ) b );
+                                mStringBuilder.Add(b);
                         }
                     }
                     break;
@@ -335,7 +343,7 @@ namespace DonDonLibrary.IO
                         // Read null terminated string
                         byte b;
                         while ((b = ReadByte()) != 0)
-                            mStringBuilder.Append((char)b);
+                            mStringBuilder.Add(b);
                         // Pad to 16 bytes
                         while (Position % 16 != 0)
                             SeekCurrent(1);
@@ -346,7 +354,7 @@ namespace DonDonLibrary.IO
                     throw new ArgumentException("Unknown string format", nameof(format));
             }
 
-            return mStringBuilder.ToString();
+            return mEncoding.GetString(mStringBuilder.ToArray());
         }
 
         public string ReadString( long offset, StringBinaryFormat format, int fixedLength = -1 )

@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{06ABB948-4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptEditor", "ScriptEditor\ScriptEditor.csproj", "{DA67294C-74A6-4204-A7FD-09FF8A8FD8DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseEditor", "ConsoleTools\DatabaseEditor\DatabaseEditor.csproj", "{83AA51C8-601A-40F0-965A-77EDAB30E7D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +25,17 @@ Global
 		{DA67294C-74A6-4204-A7FD-09FF8A8FD8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA67294C-74A6-4204-A7FD-09FF8A8FD8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA67294C-74A6-4204-A7FD-09FF8A8FD8DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83AA51C8-601A-40F0-965A-77EDAB30E7D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83AA51C8-601A-40F0-965A-77EDAB30E7D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83AA51C8-601A-40F0-965A-77EDAB30E7D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83AA51C8-601A-40F0-965A-77EDAB30E7D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DA67294C-74A6-4204-A7FD-09FF8A8FD8DA} = {06ABB948-42C1-4A7D-A2DA-17461DF78C5A}
+		{83AA51C8-601A-40F0-965A-77EDAB30E7D5} = {06ABB948-42C1-4A7D-A2DA-17461DF78C5A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5A924E8F-9683-43FD-9D75-103789853C19}
