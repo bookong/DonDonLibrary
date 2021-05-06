@@ -54,21 +54,22 @@ namespace DonDonLibrary.Database
             XmlDocument doc = new XmlDocument();
 
             doc.AppendChild(doc.CreateElement("MusicArray"));
+            doc.DocumentElement.SetAttribute("Format", "0_mus");
 
             foreach(MusicEntry entry in this.musicEntries)
             {
                 XmlElement entryNode = doc.CreateElement("Music");
                 XmlElement nameNode = doc.CreateElement("Name");
                 XmlElement previewNode = doc.CreateElement("PreviewTime");
-                XmlElement unkNode = doc.CreateElement("Unknown");
+                XmlElement offNode = doc.CreateElement("Offset");
 
                 nameNode.InnerText = entry.name;
                 previewNode.InnerText = entry.previewStart.ToString();
-                unkNode.InnerText = entry.unknown.ToString();
+                offNode.InnerText = entry.unknown.ToString();
 
                 entryNode.AppendChild(nameNode);
                 entryNode.AppendChild(previewNode);
-                entryNode.AppendChild(unkNode);
+                entryNode.AppendChild(offNode);
 
                 doc.DocumentElement.AppendChild(entryNode);
             }

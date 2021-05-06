@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Xml;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace DatabaseEditor
             string originFilename = null;
             string destFilename = null;
             DatabaseType type = DatabaseType._;
+            bool isWriteMode = false;
 
             // Argument parse
             foreach(string arg in args)
@@ -56,41 +58,58 @@ namespace DatabaseEditor
                 if (originFilename.ToLower().EndsWith("dat"))
                     destFilename = Path.ChangeExtension(originFilename, "xml");
                 else if (originFilename.ToLower().EndsWith("xml"))
-                    destFilename = Path.ChangeExtension(originFilename, "dat");
-
-            if(type == DatabaseType._)
-            {
-                string _type = ReadType();
-
-                while (_type != "1" && _type != "2")
                 {
-                    Console.Clear();
-                    _type = ReadType();
+                    destFilename = Path.ChangeExtension(originFilename, "dat");
+                    isWriteMode = true;
                 }
 
-                if (_type == "1")
-                    type = DatabaseType.Text;
-                else if (_type == "2")
-                    type = DatabaseType.Music;
+            if (!isWriteMode)
+            {
+                if (type == DatabaseType._)
+                {
+                    string _type = ReadType();
+
+                    while (_type != "1" && _type != "2")
+                    {
+                        Console.Clear();
+                        _type = ReadType();
+                    }
+
+                    if (_type == "1")
+                        type = DatabaseType.Text;
+                    else if (_type == "2")
+                        type = DatabaseType.Music;
+                }
             }
 
-            using (EndianBinaryReader reader = new EndianBinaryReader(File.Open(originFilename, FileMode.Open), Encoding.UTF8, Endianness.LittleEndian))
+            if (!isWriteMode)
             {
-                if (type == DatabaseType.Text)
+                using (EndianBinaryReader reader = new EndianBinaryReader(File.Open(originFilename, FileMode.Open), Encoding.UTF8, Endianness.LittleEndian))
                 {
-                    Console.WriteLine("a");
-                    Console.WriteLine(destFilename);
-                    TextArray data = new TextArray();
-                    data.Read(reader);
-                    using (TextWriter tw = new StreamWriter(destFilename, false, Encoding.UTF8))
-                        data.ToXml().Save(tw);
+                    if (type == DatabaseType.Text)
+                    {
+                        TextArray data = new TextArray();
+                        data.Read(reader);
+                        using (TextWriter tw = new StreamWriter(destFilename, false, Encoding.UTF8))
+                            data.ToXml().Save(tw);
+                    }
+                    else if (type == DatabaseType.Music)
+                    {
+                        MusicInfo data = new MusicInfo();
+                        data.Read(reader);
+                        using (TextWriter tw = new StreamWriter(destFilename, false, Encoding.UTF8))
+                            data.ToXml().Save(tw);
+                    }
                 }
-                else if (type == DatabaseType.Music)
+            }
+            else
+            {
+                using(EndianBinaryWriter writer = new EndianBinaryWriter(File.Open(destFilename, FileMode.Create), Encoding.UTF8, Endianness.LittleEndian))
                 {
-                    MusicInfo data = new MusicInfo();
-                    data.Read(reader);
-                    using (TextWriter tw = new StreamWriter(destFilename, false, Encoding.UTF8))
-                        data.ToXml().Save(tw);
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(originFilename);
+                    TextArray data = new TextArray().FromXml(doc);
+                    data.Write(writer);
                 }
             }
         }

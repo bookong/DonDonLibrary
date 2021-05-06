@@ -24,11 +24,27 @@ namespace DonDonLibrary.Database
             this.displayName = reader.ReadString(StringBinaryFormat.Padded16);
             reader.SeekBegin(seek);
         }
+
+        public void Write(EndianBinaryWriter writer, int index)
+        {
+            long offset = 32 + (8 * index);
+
+            long nameOffset = writer.Position;
+            writer.Write(name, StringBinaryFormat.Padded16);
+            long displayOffset = writer.Position;
+            writer.Write(displayName, StringBinaryFormat.Padded16);
+            long curOffset = writer.Position;
+
+            writer.SeekBegin(offset);
+            writer.Write((uint)nameOffset);
+            writer.Write((uint)displayOffset);
+            writer.SeekBegin(curOffset);
+        }
     }
 
     public class TextArray
     {
-        public string signature;
+        public string signature = "dokodon!!";
         public TextEntry[] entries;
 
         public void Read(EndianBinaryReader reader)
@@ -52,6 +68,23 @@ namespace DonDonLibrary.Database
             }
         }
 
+        public void Write(EndianBinaryWriter writer)
+        {
+            int dummyLength = this.entries.Length * 2 * 4;
+            while (dummyLength % 16 != 0)
+                dummyLength += 4;
+
+            int[] dummy = new int[dummyLength / 4];
+            writer.Write(this.entries.Length);
+            writer.Write(0x10);
+            writer.Write(0x20);
+            writer.Write(0x00);
+            writer.Write(this.signature, StringBinaryFormat.Padded16);
+            writer.Write(dummy);
+            for (int i = 0; i < this.entries.Length; i++)
+                this.entries[i].Write(writer, i);
+        }
+
         public XmlDocument ToXml()
         {
             XmlDocument doc = new XmlDocument();
@@ -59,6 +92,7 @@ namespace DonDonLibrary.Database
             doc.AppendChild(doc.CreateElement("TextArray"));
 
             doc.DocumentElement.SetAttribute("Signature", this.signature);
+            doc.DocumentElement.SetAttribute("Format", "0_text");
 
             foreach (TextEntry entry in this.entries)
             {
@@ -72,5 +106,7 @@ namespace DonDonLibrary.Database
 
             return doc;
         }
+
+        public TextArray FromXml(XmlDocument doc) { return Parse.FromXml<TextArray>(doc); }
     }
 }
