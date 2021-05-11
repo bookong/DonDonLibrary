@@ -107,6 +107,6 @@ namespace DonDonLibrary.Database
             return doc;
         }
 
-        public TextArray FromXml(XmlDocument doc) { return Parse.FromXml<TextArray>(doc); }
+        public TextArray FromXml(XmlDocument doc) => Parse.FromXml<TextArray>(doc);
     }
 }

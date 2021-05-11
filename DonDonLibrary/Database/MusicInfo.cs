@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Xml;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,15 @@ namespace DonDonLibrary.Database
     {
         public string name;
         public int previewStart; // menu preview start time in milliseconds
-        public int unknown;
+        public int offset;
+        public int _nameOffset;
 
         public MusicEntry Read(EndianBinaryReader reader)
         {
             int nameOffset = reader.ReadInt32();
 
             this.previewStart = reader.ReadInt32();
-            this.unknown = reader.ReadInt32();
+            this.offset = reader.ReadInt32();
 
             long seek = reader.Position;
             reader.SeekBegin(nameOffset);
@@ -28,6 +30,11 @@ namespace DonDonLibrary.Database
             reader.SeekBegin(seek);
 
             return this;
+        }
+
+        public void Write(EndianBinaryWriter writer)
+        {
+
         }
     }
 
@@ -49,6 +56,35 @@ namespace DonDonLibrary.Database
             reader.Align(16);
         }
 
+        public void Write(EndianBinaryWriter writer)
+        {
+            int dummyLength = 3 * musicEntries.Length * 4;
+            while (dummyLength % 16 != 0) dummyLength++;
+
+            byte[] dummyData = new byte[dummyLength];
+
+            writer.Write(musicEntries.Length);
+            writer.Write(0x10);
+            writer.Write((long)0x00);
+            writer.Write(dummyData);
+
+            int i = 0;
+            foreach(MusicEntry entry in musicEntries)
+            {
+                musicEntries[i]._nameOffset = (int)writer.Position;
+                writer.Write(entry.name, StringBinaryFormat.Padded16);
+                i++;
+            }
+
+            writer.SeekBegin(16);
+            foreach (MusicEntry entry in musicEntries)
+            {
+                writer.Write(entry._nameOffset);
+                writer.Write(entry.previewStart);
+                writer.Write(entry.offset);
+            }
+        }
+
         public XmlDocument ToXml()
         {
             XmlDocument doc = new XmlDocument();
@@ -65,7 +101,7 @@ namespace DonDonLibrary.Database
 
                 nameNode.InnerText = entry.name;
                 previewNode.InnerText = entry.previewStart.ToString();
-                offNode.InnerText = entry.unknown.ToString();
+                offNode.InnerText = entry.offset.ToString();
 
                 entryNode.AppendChild(nameNode);
                 entryNode.AppendChild(previewNode);
@@ -76,5 +112,7 @@ namespace DonDonLibrary.Database
 
             return doc;
         }
+
+        public MusicInfo FromXml(XmlDocument doc) => Parse.FromXml<MusicInfo>(doc);
     }
 }

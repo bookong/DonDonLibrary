@@ -9,7 +9,7 @@ namespace DonDonLibrary.Database
 {
     internal class Parse
     {
-        private static string[] FORMATS = { "0_text" };
+        private static string[] FORMATS = { "0_text", "0_mus" };
 
         internal static dynamic FromXml<T>(XmlDocument doc)
         {
@@ -26,13 +26,30 @@ namespace DonDonLibrary.Database
                     {
                         textArray.entries[i] = new TextEntry();
                         textArray.entries[i].name = node.GetAttribute("Id");
-                        textArray.entries[i].displayName = node.InnerText;
-
                         textArray.entries[i].displayName = node.InnerText.Replace("\\n", "\x0a");
                         i++;
                     }
 
                     return textArray;
+                }
+                else if(typeof(T) == typeof(MusicInfo))
+                {
+                    MusicInfo musicInfo = new MusicInfo();
+                    musicInfo.musicEntries = new MusicEntry[doc.DocumentElement.ChildNodes.Count];
+
+                    int i = 0;
+                    foreach (XmlElement node in doc.DocumentElement.ChildNodes)
+                    {
+                        MusicEntry entry = new MusicEntry();
+                        entry.name = node["Name"].InnerText;
+                        entry.previewStart = int.Parse(node["PreviewTime"].InnerText);
+                        entry.offset = int.Parse(node["Offset"].InnerText);
+
+                        musicInfo.musicEntries[i] = entry;
+                        i++;
+                    }
+
+                    return musicInfo;
                 }
             }
             return doc;

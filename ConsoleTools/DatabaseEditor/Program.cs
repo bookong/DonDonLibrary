@@ -108,8 +108,17 @@ namespace DatabaseEditor
                 {
                     XmlDocument doc = new XmlDocument();
                     doc.Load(originFilename);
-                    TextArray data = new TextArray().FromXml(doc);
-                    data.Write(writer);
+
+                    if (doc.DocumentElement.GetAttribute("Format") == "0_text")
+                    {
+                        TextArray data = new TextArray().FromXml(doc);
+                        data.Write(writer);
+                    }
+                    else if(doc.DocumentElement.GetAttribute("Format") == "0_mus")
+                    {
+                        MusicInfo data = new MusicInfo().FromXml(doc);
+                        data.Write(writer);
+                    }
                 }
             }
         }
