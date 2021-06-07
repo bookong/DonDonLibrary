@@ -16,22 +16,20 @@ namespace DonDonLibrary.Chart
     {
         private static string[] GetCommandArgs(string cmd)
         {
-            cmd = cmd.Trim(';');
-            cmd = cmd.Trim(')');
-            string[] cmd_spl = cmd.Split('(');
-            cmd_spl[1] = cmd_spl[1].Trim();
-
-            return cmd_spl[1].Split(',');
+            string[] args = cmd.Split(':')[1].Split(' ');
+            for (int i = 0; i < args.Length; i++)
+                args[i] = args[i].Trim();
+            return args;
         }
 
         public static string[] GetHeaderData(int[] header)
         {
             string[] headerData = new string[4];
 
-            headerData[0] = $"HAS_DIVERGE_PATH({header[0]});";
-            headerData[1] = $"HP_SETTINGS({header[1]}, {header[2]}, {header[3]}, {header[4]}, {header[5]});";
-            headerData[2] = $"COMBO_SETTINGS({header[6]}, {header[7]}, {header[8]});";
-            headerData[3] = $"DIVERGE_POINTS({header[9]}, {header[10]}, {header[11]}, {header[12]}, {header[13]}, {header[14]}, {header[15]}, {header[16]}, {header[17]}, {header[18]});";
+            headerData[0] = $"HAS_DIVERGE_PATH:{header[0]}";
+            headerData[1] = $"HP_SETTINGS:{header[1]} {header[2]} {header[3]} {header[4]} {header[5]}";
+            headerData[2] = $"COMBO_SETTINGS:{header[6]} {header[7]} {header[8]}";
+            headerData[3] = $"DIVERGE_POINTS:{header[9]} {header[10]} {header[11]} {header[12]} {header[13]} {header[14]} {header[15]} {header[16]} {header[17]} {header[18]}";
 
             return headerData;
         }
@@ -47,18 +45,20 @@ namespace DonDonLibrary.Chart
             SubTrack curSubTrack = new SubTrack();
             string[] subTrackLabels = { "NORMAL", "PROFESSIONAL", "MASTER" };
 
+            uts.Add("// Header Metadata");
             foreach (string cmd in GetHeaderData(fumenData.header.headerData))
                 uts.Add(cmd);
+            uts.Add("// ---------------");
 
             foreach (Track track in fumenData.tracks)
             {
                 time = -1000;
 
                 if (!firstTrack)
-                    uts.Add("TRACK_END();");
+                    uts.Add("TRACK_END:");
 
                 int gogo_flag = track.gogo ? 1 : 0;
-                uts.Add($"TRACK_START({StringFormat.Stringify(track.bpm)}, {StringFormat.Stringify(track.time)}, {gogo_flag}, {track.trackLine});");
+                uts.Add($"TRACK_START:{StringFormat.Stringify(track.bpm)} {StringFormat.Stringify(track.time)} {gogo_flag} {track.trackLine}");
 
                 for (int i = 0; i < 3; i++)
                 {
@@ -76,35 +76,35 @@ namespace DonDonLibrary.Chart
                             break;
                     }
 
-                    uts.Add($"SUBTRACK_START({subTrackLabels[i]}, {StringFormat.Stringify(curSubTrack.scrollSpeed)});");
+                    uts.Add($"SUBTRACK_START:{subTrackLabels[i]} {StringFormat.Stringify(curSubTrack.scrollSpeed)}");
 
                     foreach (Note note in curSubTrack.notes)
                     {
                         if (note.time > time)
                         {
-                            uts.Add($"TIME({StringFormat.Stringify(note.time)});");
+                            uts.Add($"TIME:{StringFormat.Stringify(note.time)}");
                             time = note.time;
                         }
                         if (note.basePoint != basePnt)
                         {
-                            uts.Add($"SET_POINT_BASE({note.basePoint});");
+                            uts.Add($"SET_POINT_BASE:{note.basePoint}");
                             basePnt = note.basePoint;
                         }
                         if (note.addPoint != addPnt)
                         {
-                            uts.Add($"SET_POINT_INCREASE({note.addPoint});");
+                            uts.Add($"SET_POINT_INCREASE:{note.addPoint}");
                             addPnt = note.addPoint;
                         }
-                        uts.Add($"NOTE({note.type}, {StringFormat.Stringify(note.rollHoldTime)}, {note.balloonHitCount});");
+                        uts.Add($"NOTE:{note.type} {StringFormat.Stringify(note.rollHoldTime)} {note.balloonHitCount}");
                     }
 
-                    uts.Add("SUBTRACK_END();");
+                    uts.Add("SUBTRACK_END:");
                 }
 
                 if (firstTrack)
                     firstTrack = false;
             }
-            uts.Add("TRACK_END();");
+            uts.Add("TRACK_END:");
 
             return uts.ToArray();
         }
@@ -123,20 +123,20 @@ namespace DonDonLibrary.Chart
                 measure = 60 / track.bpm * 4 / 48;
 
                 if (!firstTrack)
-                    uts.Add("TRACK_END();");
+                    uts.Add("TRACK_END:");
 
-                uts.Add($"TRACK2_START({StringFormat.Stringify(track.bpm)}, {StringFormat.Stringify(track.time)}, {track.gogoFlag}, {track.trackLine});");
+                uts.Add($"TRACK2_START:{StringFormat.Stringify(track.bpm)} {StringFormat.Stringify(track.time)} {track.gogoFlag} {track.trackLine}");
 
                 for (int i = 0; i < 6; i++)
                 {
-                    uts.Add($"SUBTRACK2_START({i}, {StringFormat.Stringify(track.scrollSpeeds[i])});");
+                    uts.Add($"SUBTRACK2_START:{i} {StringFormat.Stringify(track.scrollSpeeds[i])}");
                     int noteSt = track.subtracks[i].noteIndexSt;
                     int noteCount = track.subtracks[i].noteCount;
                     int pointAdd = track.subtracks[i].pointGain;
                     if (pointAdd != point)
                     {
-                        uts.Add($"SET_POINT_BASE({pointAdd});");
-                        uts.Add($"SET_POINT_INCREASE(0);");
+                        uts.Add($"SET_POINT_BASE:{pointAdd}");
+                        uts.Add($"SET_POINT_INCREASE:0");
                     }
 
                     for (int k = noteSt; k < (noteSt + noteCount); k++)
@@ -145,16 +145,16 @@ namespace DonDonLibrary.Chart
                         int balloonHitCount = fumenData.notes[k].balloonHitCount;
                         int type = fumenData.notes[k].type;
 
-                        uts.Add($"TIME({StringFormat.Stringify(measure * fumenData.notes[k].measure * 1000)});");
-                        uts.Add($"NOTE2({type}, {rollHoldTime}, {balloonHitCount});");
+                        uts.Add($"TIME:{StringFormat.Stringify(measure * fumenData.notes[k].measure * 1000)}");
+                        uts.Add($"NOTE2:{type} {rollHoldTime} {balloonHitCount}");
                     }
-                    uts.Add("SUBTRACK_END();");
+                    uts.Add("SUBTRACK_END:");
                 }
 
                 if (firstTrack)
                     firstTrack = false;
             }
-            uts.Add("TRACK_END();");
+            uts.Add("TRACK_END:");
 
             return uts.ToArray();
         }
@@ -177,8 +177,12 @@ namespace DonDonLibrary.Chart
 
             foreach (string rawcmd in uts)
             {
+                if (rawcmd.StartsWith("//")) continue;
+
                 string cmd = rawcmd.ToUpper();
                 string[] args = GetCommandArgs(cmd);
+
+                Console.WriteLine(rawcmd);
 
                 if (cmd.StartsWith("HAS_DIVERGE_PATH"))
                     fumenData.header.headerData[0] = int.Parse(args[0]);
@@ -286,17 +290,17 @@ namespace DonDonLibrary.Chart
                 for(int i = 0; i < args.Length; i++) { args[i] = args[i].Replace(" ", "");  }
 
                 if (line.StartsWith("TRACK2_START"))
-                    lines.Add($"TRACK_START({args[0]}, {args[1]}, {args[2]}, {args[3]});");
+                    lines.Add($"TRACK_START:{args[0]} {args[1]} {args[2]} {args[3]}");
                 else if (line.StartsWith("TRACK_END"))
                     lines.Add(line);
                 else if (line.StartsWith("SUBTRACK2_START"))
                 {
                     if (args[0] == "0")
-                        lines.Add($"SUBTRACK_START(NORMAL, {args[1]});");
+                        lines.Add($"SUBTRACK_START:NORMAL {args[1]}");
                     else if (args[0] == "1")
-                        lines.Add($"SUBTRACK_START(PROFESSIONAL, {args[1]});");
+                        lines.Add($"SUBTRACK_START:PROFESSIONAL {args[1]}");
                     else if (args[0] == "2")
-                        lines.Add($"SUBTRACK_START(MASTER, {args[1]});");
+                        lines.Add($"SUBTRACK_START:MASTER {args[1]}");
                     else
                     {
                         curSubtrack = "IGNORE";
@@ -318,7 +322,7 @@ namespace DonDonLibrary.Chart
                     if (args[2] == "-1")
                         args[2] = "0";
 
-                    lines.Add($"NOTE({args[0]}, {args[1]}, {args[2]});");
+                    lines.Add($"NOTE:{args[0]} {args[1]} {args[2]}");
                 }
             }
 

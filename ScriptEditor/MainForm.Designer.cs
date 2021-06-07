@@ -46,8 +46,8 @@ namespace ScriptEditor
             this.gen2Gen3MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applyOffsetMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scriptBox = new System.Windows.Forms.TextBox();
             this.timingEditorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scriptBox = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,7 +59,7 @@ namespace ScriptEditor
             this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(669, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(487, 25);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -178,9 +178,16 @@ namespace ScriptEditor
             // applyOffsetMenuItem
             // 
             this.applyOffsetMenuItem.Name = "applyOffsetMenuItem";
-            this.applyOffsetMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.applyOffsetMenuItem.Size = new System.Drawing.Size(146, 22);
             this.applyOffsetMenuItem.Text = "Apply Offset";
             this.applyOffsetMenuItem.Click += new System.EventHandler(this.applyOffsetMenuItem_Click);
+            // 
+            // timingEditorMenuItem
+            // 
+            this.timingEditorMenuItem.Name = "timingEditorMenuItem";
+            this.timingEditorMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.timingEditorMenuItem.Text = "Timing Editor";
+            this.timingEditorMenuItem.Click += new System.EventHandler(this.timingEditorMenuItem_Click);
             // 
             // scriptBox
             // 
@@ -192,27 +199,22 @@ namespace ScriptEditor
             this.scriptBox.Multiline = true;
             this.scriptBox.Name = "scriptBox";
             this.scriptBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.scriptBox.Size = new System.Drawing.Size(644, 427);
+            this.scriptBox.Size = new System.Drawing.Size(469, 398);
             this.scriptBox.TabIndex = 1;
-            // 
-            // timingEditorMenuItem
-            // 
-            this.timingEditorMenuItem.Name = "timingEditorMenuItem";
-            this.timingEditorMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.timingEditorMenuItem.Text = "Timing Editor";
-            this.timingEditorMenuItem.Click += new System.EventHandler(this.timingEditorMenuItem_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(669, 467);
+            this.ClientSize = new System.Drawing.Size(487, 434);
             this.Controls.Add(this.scriptBox);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "Taiko ScriptEditor";
+            this.Text = "Fumen Viewer";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

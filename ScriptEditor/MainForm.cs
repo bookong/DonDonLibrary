@@ -172,7 +172,8 @@ namespace ScriptEditor
         {
             if (lastOpenedGen3 == null)
                 MessageBox.Show("Please open a Gen 3 fumen first.", "No header information", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            scriptBox.Lines = UTS.ConvertGen2ToGen3(scriptBox.Lines, lastOpenedGen3);
+            else
+                scriptBox.Lines = UTS.ConvertGen2ToGen3(scriptBox.Lines, lastOpenedGen3);
         }
 
         private void applyOffsetMenuItem_Click(object sender, EventArgs e)
