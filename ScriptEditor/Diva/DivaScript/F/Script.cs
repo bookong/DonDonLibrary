@@ -1,4 +1,6 @@
-﻿namespace DonDonLibrary.Chart.Diva.F
+﻿// Thanks Samyuu for providing ScriptEditor code
+
+namespace DonDonLibrary.Chart.Diva.F
 {
     /// <summary>
     /// Project DIVA F script file.
