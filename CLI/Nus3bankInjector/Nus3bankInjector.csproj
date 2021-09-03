@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{117F2513-DC6D-4716-A171-9FA396B303ED}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DonDonLibrary</RootNamespace>
-    <AssemblyName>DonDonLibrary</AssemblyName>
+    <ProjectGuid>{8D7B8D9A-C4DC-494B-B48C-8B0DFD111849}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Nus3bankInjector</RootNamespace>
+    <AssemblyName>Nus3bankInjector</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -21,16 +22,15 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,25 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Chart\Gen2.cs" />
-    <Compile Include="Chart\HanteiTemplate.cs" />
-    <Compile Include="Chart\UTS.cs" />
-    <Compile Include="Chart\Types.cs" />
-    <Compile Include="Chart\Gen3.cs" />
-    <Compile Include="Database\DatabaseFormat.cs" />
-    <Compile Include="Database\MusicEntry.cs" />
-    <Compile Include="Database\Vita\MusicInfo.cs" />
-    <Compile Include="GameFormat.cs" />
-    <Compile Include="IO\Utilities\AlignmentHelper.cs" />
-    <Compile Include="IO\Utilities\BitHelper.cs" />
-    <Compile Include="IO\EndianBinaryReader.cs" />
-    <Compile Include="IO\EndianBinaryWriter.cs" />
-    <Compile Include="IO\Endianness.cs" />
-    <Compile Include="IO\StringBinaryFormat.cs" />
-    <Compile Include="IO\Unsafe.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\StringFormat.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -32,7 +32,7 @@ namespace DonDonLibrary.Database.Vita
 
                 musicEntries[i].name = reader.ReadString(StringBinaryFormat.NullTerminated);
 
-                Console.WriteLine($"[{musicEntries[i].name}, {musicEntries[i].previewStart}, {musicEntries[i].offset}]");
+                //Console.WriteLine($"[{musicEntries[i].name}, {musicEntries[i].previewStart}, {musicEntries[i].offset}]");
             }
 
             return musicEntries;

@@ -14,8 +14,8 @@ namespace DonDonLibrary.Chart
         public float time;
         public int unk = 0;
         public int unk1 = 0;
-        public short basePoint;
-        public short addPoint;
+        public short basePoint = 600;
+        public short addPoint = 600;
         public float rollHoldTime = 0.0f;
         public short balloonHitCount = -1;
         public float _absoluteTime;
@@ -26,20 +26,20 @@ namespace DonDonLibrary.Chart
     public class SubTrack
     {
         internal short noteCount;
-        internal short unk;
+        internal short unk = 0;
         public float scrollSpeed = 1.0f;
         public List<Note> notes = new List<Note>();
     }
 
     public class Track
     {
-        public float bpm;
-        public float time;
-        public bool gogo;
-        public byte trackLine;
-        public short unk;
-        public int[] bunkis;
-        public int unk1;
+        public float bpm = 160f;
+        public float time = 0f;
+        public bool gogo = false;
+        public byte trackLine = 0x01;
+        public short unk = 0;
+        public int[] bunkis = new int[] { -1, -1, -1, -1, -1, -1 };
+        public int unk1 = 0;
         public SubTrack normalTrack = new SubTrack();
         public SubTrack professionalTrack = new SubTrack();
         public SubTrack masterTrack = new SubTrack();
@@ -138,8 +138,8 @@ namespace DonDonLibrary.Chart
         {
             SubTrack curSubTrack = new SubTrack();
 
-            foreach(float f in fumenData.header.hanteiData)
-                writer.Write(f);
+            for (int i = 0; i < 108; i++)
+                writer.Write(fumenData.header.hanteiData[i]);
             foreach (int i in fumenData.header.headerData)
                 writer.Write(i);
 
