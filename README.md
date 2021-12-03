@@ -1,6 +1,8 @@
 # DonDonLibrary
 Modding library for the Taiko games<br>
 
+DAMN THIS IN A SERIOUS NEED OF REWORK. FOR REAL. IM GONNA WORK IN IY AS SOON AS I CAN
+
 ## Builds
 ### Pre-compiled binaries
 * [Get the latest stable release here](https://github.com/mrcloverthecoder/DonDonLibrary/releases/latest)<br>
