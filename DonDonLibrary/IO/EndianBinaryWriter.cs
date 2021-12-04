@@ -262,6 +262,19 @@ namespace DonDonLibrary.IO
             }
         }
 
+        public void Write(Vector3 value)
+        {
+            Write(value.X);
+            Write(value.Y);
+            Write(value.Z);
+        }
+
+        public void Write(Vector3[] value)
+        {
+            for (int i = 0; i < value.Length; i++)
+                Write(value[i]);
+        }
+
         public void WritePadding( int count )
         {
             for ( int i = 0; i < count / 8; i++ )

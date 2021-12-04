@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DonDonLibrary.IO;
 
-namespace DonDonLibrary.Chart.Gen2
+namespace DonDonLibrary.Fumen.Gen2
 {
     public class Header
     {

@@ -5,13 +5,9 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DonDonLibrary", "DonDonLibrary\DonDonLibrary.csproj", "{117F2513-DC6D-4716-A171-9FA396B303ED}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{06ABB948-42C1-4A7D-A2DA-17461DF78C5A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing Projects", "Testing Projects", "{4688F022-167C-4E9D-BCA2-0A2502D3D669}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibTest", "CLI\LibTest\LibTest.csproj", "{06070EDC-39C6-4C29-809E-2EE2D7901B9F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FumenToolsCli", "CLI\FumenToolsCli\FumenToolsCli.csproj", "{EA4F95F2-46C1-4020-A422-2353E1178662}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nus3bankInjector", "CLI\Nus3bankInjector\Nus3bankInjector.csproj", "{8D7B8D9A-C4DC-494B-B48C-8B0DFD111849}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fumentest", "Testing\fumentest\fumentest.csproj", "{F1A0B3E9-4344-4A6C-94A8-3F4F5547038A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,26 +19,16 @@ Global
 		{117F2513-DC6D-4716-A171-9FA396B303ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{117F2513-DC6D-4716-A171-9FA396B303ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{117F2513-DC6D-4716-A171-9FA396B303ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{06070EDC-39C6-4C29-809E-2EE2D7901B9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06070EDC-39C6-4C29-809E-2EE2D7901B9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06070EDC-39C6-4C29-809E-2EE2D7901B9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06070EDC-39C6-4C29-809E-2EE2D7901B9F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA4F95F2-46C1-4020-A422-2353E1178662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA4F95F2-46C1-4020-A422-2353E1178662}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA4F95F2-46C1-4020-A422-2353E1178662}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA4F95F2-46C1-4020-A422-2353E1178662}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8D7B8D9A-C4DC-494B-B48C-8B0DFD111849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8D7B8D9A-C4DC-494B-B48C-8B0DFD111849}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8D7B8D9A-C4DC-494B-B48C-8B0DFD111849}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8D7B8D9A-C4DC-494B-B48C-8B0DFD111849}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1A0B3E9-4344-4A6C-94A8-3F4F5547038A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1A0B3E9-4344-4A6C-94A8-3F4F5547038A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1A0B3E9-4344-4A6C-94A8-3F4F5547038A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1A0B3E9-4344-4A6C-94A8-3F4F5547038A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{06070EDC-39C6-4C29-809E-2EE2D7901B9F} = {06ABB948-42C1-4A7D-A2DA-17461DF78C5A}
-		{EA4F95F2-46C1-4020-A422-2353E1178662} = {06ABB948-42C1-4A7D-A2DA-17461DF78C5A}
-		{8D7B8D9A-C4DC-494B-B48C-8B0DFD111849} = {06ABB948-42C1-4A7D-A2DA-17461DF78C5A}
+		{F1A0B3E9-4344-4A6C-94A8-3F4F5547038A} = {4688F022-167C-4E9D-BCA2-0A2502D3D669}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5A924E8F-9683-43FD-9D75-103789853C19}

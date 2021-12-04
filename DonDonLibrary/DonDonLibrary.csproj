@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,13 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chart\Gen2.cs" />
-    <Compile Include="Chart\HanteiTemplate.cs" />
-    <Compile Include="Chart\UTS.cs" />
-    <Compile Include="Chart\Types.cs" />
-    <Compile Include="Chart\Gen3.cs" />
-    <Compile Include="Database\DatabaseFormat.cs" />
-    <Compile Include="Database\MusicEntry.cs" />
-    <Compile Include="Database\Vita\MusicInfo.cs" />
+    <Compile Include="Chart\ThirdGeneration\NoteType.cs" />
+    <Compile Include="Chart\ThirdGenFumen.cs" />
+    <Compile Include="Chart\ThirdGeneration\Note.cs" />
+    <Compile Include="Chart\ThirdGeneration\Track.cs" />
     <Compile Include="GameFormat.cs" />
     <Compile Include="IO\Utilities\AlignmentHelper.cs" />
     <Compile Include="IO\Utilities\BitHelper.cs" />
@@ -60,7 +58,6 @@
     <Compile Include="IO\StringBinaryFormat.cs" />
     <Compile Include="IO\Unsafe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\StringFormat.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

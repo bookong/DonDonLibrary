@@ -379,5 +379,26 @@ namespace DonDonLibrary.IO
             ReadAtOffset( offset, () => str = ReadStrings( count, format, fixedLength ) );
             return str;
         }
+
+        public Vector3 ReadVector3()
+        {
+            Vector3 value = new Vector3();
+
+            value.X = ReadSingle();
+            value.Y = ReadSingle();
+            value.Z = ReadSingle();
+
+            return value;
+        }
+
+        public Vector3[] ReadVector3s(int count)
+        {
+            Vector3[] value = new Vector3[count];
+
+            for (int i = 0; i < count; i++)
+                value[i] = ReadVector3();
+
+            return value;
+        }
     }
 }
